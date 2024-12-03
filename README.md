@@ -1,2 +1,2 @@
 # stash
-React App tith typescript and API consuming
+React App with typescript and API consuming
