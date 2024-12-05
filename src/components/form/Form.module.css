@@ -1,0 +1,33 @@
+.formContainer {
+    background-color: #1c1c1c;
+    padding: 30px;
+    min-width: 500px;
+    width: fit-content;
+    margin: auto;
+    max-width: 100%;
+    margin-top: 60px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.formContainer .title {
+    font-size: 32px;
+    margin-bottom: 16px;
+    color: #FFD357;
+}
+
+.formContainer p {
+    color: #a8a8a8;
+}
+
+.formContainer form {
+    margin-top: 30px;
+}
+
+.formContainer .buttonWrapper {
+    text-align: right;
+}
+
+form button {
+    margin-top: 20px;
+}

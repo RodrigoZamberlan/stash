@@ -1,5 +1,11 @@
+import { UserContext } from "../../contexts/UserContext";
+
 const Home: React.FC = () => {
-    return <>Welcome to stash!</>
+    let currentUser = { firstname: "Rodrigo", lastname: "Freddo", email: "rodrigo@gmail.com", password: "123"};
+
+    return <UserContext.Provider value={currentUser}>
+        <></>
+    </UserContext.Provider>
 }
 
 export default Home;

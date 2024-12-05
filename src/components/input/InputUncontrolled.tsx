@@ -1,4 +1,6 @@
+
 import React from "react";
+import styles from './Input.module.css';
 
 interface InputProps {
     id: string;
@@ -16,7 +18,7 @@ const InputUncontrolled = React.forwardRef<HTMLInputElement, InputProps>(({
     required = false,
 }, ref) => {
     return (
-    <div className="field">
+    <div className={styles.field}>
         <label htmlFor={id}>{label}</label>
         <input ref={ref} id={id} type={type} name={id} placeholder={placeholder} required={required}/>
     </div>

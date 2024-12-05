@@ -1,4 +1,5 @@
 import React from "react";
+import styles from './Input.module.css';
 
 interface InputProps {
     id: string;
@@ -20,7 +21,7 @@ const InputControlled: React.FC<InputProps> = ({
     handleChange
 }) => {
     return (
-    <div className="field">
+    <div className={styles.field}>
         <label htmlFor={id}>{label}</label>
         <input id={id} type={type} name={id} placeholder={placeholder} required={required} value={value} onChange={handleChange}/>
     </div>

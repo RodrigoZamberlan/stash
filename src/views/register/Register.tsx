@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "../../components/form/Form";
 import InputControlled from "../../components/input/InputControlled";
+import Button from "../../components/button/Button";
 
 const formDataDefault = {
     firstname: "",
@@ -31,10 +32,9 @@ const Register: React.FC = () => {
             <InputControlled id="lastname" label="Last Name" value={formData.lastname} placeholder="Type your last name here" handleChange={handleChange}/>
             <InputControlled id="email" label="E-mail" value={formData.email} placeholder="Type your e-mail here" handleChange={handleChange}/>
             <InputControlled id="password" label="Password" value={formData.password} placeholder="Type your password here" type="password" handleChange={handleChange}/>
-        </Form>
 
-        <p>Already have an account?</p>
-        <button onClick={() => navigate('/login')}>Sign In</button>
+            <p>Already have an account? <Button styleType="link" type="button" handleClick={() => navigate('/login')}>Sign In</Button></p>
+        </Form>
     </div>
 }
 
