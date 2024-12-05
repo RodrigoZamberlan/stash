@@ -1,10 +1,4 @@
 import { createContext } from "react";
-
-type User = {
-    firstname: string,
-    lastname: string,
-    email: string,
-    password: string
-}
+import { User } from "../types/User";
 
 export const UserContext = createContext<User | undefined>(undefined);
