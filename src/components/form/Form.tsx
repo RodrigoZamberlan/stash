@@ -7,7 +7,7 @@ interface FormProps {
     children: React.ReactNode;
     submitTextButton?: string;
     loading?: boolean;
-    errors?: string | null;
+    errors?: {message: string} | null;
     handleSubmit: React.FormEventHandler<HTMLFormElement>;
 }
 
@@ -29,7 +29,7 @@ const Form: React.FC<FormProps> = (
             <div className={styles.buttonWrapper}>
                 <Button styleType={loading ? "disabled" : "primary"} type="submit">{loading ? "Loading" : submitTextButton}</Button>
            </div>
-           {errors ? <p>{errors}</p> : ""}
+           {errors ? <p>{errors.message}</p> : ""}
         </form>
     </div>
 }

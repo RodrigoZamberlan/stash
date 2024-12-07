@@ -1,4 +1,4 @@
-const BASE_API_URL = "http://localhost/8080";
+const BASE_API_URL = "http://localhost:8080/api";
 
 export const apiClient = async<T>(
     endpoint: string,
@@ -14,10 +14,22 @@ export const apiClient = async<T>(
         },
     });
 
+    const contentType = response.headers.get("Content-Type") || "";
+
     if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(errorMessage || "Something went wrong");
+        const errorBody = await (contentType.includes("application/json")
+        ? response.json()
+        : response.text());
+
+        const errorMessage =
+        typeof errorBody === "string"
+            ? errorBody
+            : errorBody.message || "Something went wrong";
+
+        throw new Error(errorMessage);
     }
 
-    return response.json();
-}
+    return contentType.includes("application/json")
+        ? response.json()
+        : Promise.reject("Unexpected content type");
+    }

@@ -4,7 +4,7 @@ import { User } from "../types/User";
 
 export const useCreateUser = () => {
     const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState<string | null>(null);
+    const [errors, setErrors] = useState<{message: string} | null>(null);
     
     const createUserHandler = async (userData: User) => {
         setLoading(true);
@@ -13,9 +13,11 @@ export const useCreateUser = () => {
             await createUser(userData);
             setErrors(null);
             setLoading(false);
+            return true;
         } catch (error) {
-            setErrors(error instanceof Error ? error.message : "Failed to create user");
+            setErrors(error instanceof Error ? error : {"message":"Failed to create user"});
             setLoading(false);
+            return false;
         }
     }
 

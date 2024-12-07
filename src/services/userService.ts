@@ -12,6 +12,13 @@ export const createUser = async (userData: User) => {
     });
 }
 
+export const authUser = async (email: string, password: string) => {
+    return apiClient<User>('/users/auth', {
+        method: 'Post',
+        body: JSON.stringify({email, password})
+    })
+}
+
 export const deleteUser = async (id: string) => {
     return apiClient<void>(`/users/delete/${id}`, { method: 'DELETE' });
 }
