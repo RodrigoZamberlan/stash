@@ -22,7 +22,7 @@ const Login: React.FC = () => {
         }
     }
 
-    return <div className="login-page">
+    return <div className="form-page">
         <Form title="Login" loading={loading} errors={errors} description="Provide your credentials to access" handleSubmit={handleSubmit}>
             <InputUncontrolled ref={email} id="email" label="E-mail" placeholder="Type your e-mail here" required/>
             <InputUncontrolled ref={password} id="password" type="password" label="Password" placeholder="Type your password here" required/>

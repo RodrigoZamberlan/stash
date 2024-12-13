@@ -1,0 +1,18 @@
+.header {
+    height: 60px;
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.navigation div {
+    cursor: pointer;
+}

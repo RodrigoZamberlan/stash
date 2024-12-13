@@ -9,6 +9,11 @@ button {
     cursor: pointer;
 }
 
+button:disabled {
+    background-color: #333;
+    color: black;
+}
+
 .primary {
     background-color: #FFD357;
     color: black;

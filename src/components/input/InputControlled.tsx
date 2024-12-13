@@ -1,14 +1,14 @@
 import React from "react";
 import styles from './Input.module.css';
 
-interface InputProps {
+export interface InputProps {
     id: string;
     label: string;
     type?: string;
     placeholder?: string;
     required?: boolean;
-    value: string | number;
-    handleChange: React.ChangeEventHandler<HTMLInputElement>
+    value: string;
+    handleChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const InputControlled: React.FC<InputProps> = ({
@@ -18,7 +18,7 @@ const InputControlled: React.FC<InputProps> = ({
     placeholder = "",
     required = false,
     value,
-    handleChange
+    handleChange,
 }) => {
     return (
     <div className={styles.field}>
