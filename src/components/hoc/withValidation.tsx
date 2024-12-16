@@ -11,7 +11,7 @@ function withValidation<T extends {value: string, id: string, handleChange: (eve
     ) {
     return function WithValidation(props: T & { onValidationChange?: (id: string, isValid: boolean) => void }) {
         const [validationStatus, setValidationStatus] = useState(
-            validationRules.map(() => false) //iniciate with all validation status false
+            validationRules.map(() => false)
         );
 
         const handleValidation = (value: string) => {
@@ -29,7 +29,7 @@ function withValidation<T extends {value: string, id: string, handleChange: (eve
             handleValidation(value);
 
             if (props.handleChange) {
-                props.handleChange(event); //If it has an original handleChange pass it as well
+                props.handleChange(event);
             }
         }
 
