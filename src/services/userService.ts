@@ -6,7 +6,7 @@ export const fetchUsers = async () => {
 }
 
 export const createUser = async (userData: User) => {
-    return apiClient<User>('/users', {
+    return apiClient<User>('/users/register', {
         method: 'Post',
         body: JSON.stringify(userData),
     });

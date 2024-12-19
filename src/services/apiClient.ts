@@ -1,4 +1,4 @@
-const BASE_API_URL = "http://localhost:8080/api";
+const BASE_API_URL = "http://localhost:5085/api";
 
 export const apiClient = async<T>(
     endpoint: string,

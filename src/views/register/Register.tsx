@@ -12,7 +12,9 @@ const formDataDefault = {
     firstname: "",
     lastname: "",
     email: "",
-    password: ""
+    password: "",
+    role: "",
+    isActive: true
 }
 
 const Register: React.FC = () => {
