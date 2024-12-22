@@ -13,6 +13,10 @@
   color: white;
 }
 
+.page {
+  padding-top: 60px;
+}
+
 .form-page {
   min-height: 100vh;
   display: flex;

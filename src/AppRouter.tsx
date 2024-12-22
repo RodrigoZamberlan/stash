@@ -4,6 +4,7 @@ import Welcome from './views/welcome/Welcome';
 import Home from './views/home/Home';
 import Login from './views/login/Login';
 import Register from './views/register/Register';
+import Categories from './views/categories/Categories';
 
 const AppRouter: React.FC = () => {
     return (<Router>
@@ -12,6 +13,7 @@ const AppRouter: React.FC = () => {
                     <Route path='/home' element={<Home />}></Route>
                     <Route path='/login' element={<Login />}></Route>
                     <Route path='/register' element={<Register />}></Route>
+                    <Route path='/categories' element={<Categories />}></Route>
                 </Routes>
             </Router>);
 }
