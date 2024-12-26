@@ -19,7 +19,7 @@ const InputUncontrolled = React.forwardRef<HTMLInputElement, InputProps>(({
 }, ref) => {
     return (
     <div className={styles.field}>
-        <label htmlFor={id}>{label}</label>
+        <label htmlFor={id}>{label} {required && "*"}</label>
         <input ref={ref} id={id} type={type} name={id} placeholder={placeholder} required={required}/>
     </div>
     );

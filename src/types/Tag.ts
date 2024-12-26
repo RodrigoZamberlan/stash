@@ -1,6 +1,6 @@
 import { Post } from "./Post";
 
-export type Category = {
+export type Tag = {
     name: string,
     posts?: Post[]
 }

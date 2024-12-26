@@ -22,7 +22,7 @@ const InputControlled: React.FC<InputProps> = ({
 }) => {
     return (
     <div className={styles.field}>
-        <label htmlFor={id}>{label}</label>
+        <label htmlFor={id}>{label} {required && "*"}</label>
         <input id={id} type={type} name={id} placeholder={placeholder} required={required} value={value} onChange={handleChange}/>
     </div>
     );
