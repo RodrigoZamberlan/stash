@@ -4,6 +4,7 @@ import InputUncontrolled from "../../components/input/InputUncontrolled";
 import { useCreateCategory } from "../../hooks/useCreateCategory";
 import { Category } from "../../types/Category";
 import { useCategories } from "../../contexts/post/CategoriesContext";
+import { fetchCategories } from "../../services/categoryService";
 
 const CategoriesForm: React.FC = () => {
     const { setCategories } = useCategories();
@@ -16,7 +17,8 @@ const CategoriesForm: React.FC = () => {
             const newCategory: Category = { name:  categoryName.current.value };
             const success = await createCategoryHandler(newCategory);
             if (success) {
-                setCategories((prevCategories) => [...prevCategories, newCategory]);
+                const updatedCategories = await fetchCategories();
+                setCategories(updatedCategories);
                 categoryName.current.value = "";
             }
         }

@@ -1,8 +1,9 @@
+import React from "react";
 import styles from './SelectSingleOption.module.css';
 
 export type Option = {
     name: string, 
-    value: string
+    value: string | number | undefined
 }
 
 interface SelectSingleOptionProps {
@@ -13,15 +14,34 @@ interface SelectSingleOptionProps {
     defaultMsgNoOptions?: string,
 }
 
-const SelectSingleOption: React.FC<SelectSingleOptionProps> = ({id, label, required = false, options, defaultMsgNoOptions = "No options yet, create one"}) => {
-    return <div className={styles.selectSingleOption}>
-        <label htmlFor={id}>{label}</label>
+// const SelectSingleOption: React.FC<SelectSingleOptionProps> = ({id, label, required = false, options, defaultMsgNoOptions = "No options yet, create one"}) => {
+//     return <div className={styles.selectSingleOption}>
+//         <label htmlFor={id}>{label}</label>
+//             {options !== null && options.length > 0 ? 
+//                 <select id={id} required={required}>
+//                     {options.map((option) => (<option value={option.value}>{option.name}</option>))}
+//                 </select>
+//             : (<p>{defaultMsgNoOptions}</p>)}
+//     </div>
+// }
+
+const SelectSingleOption = React.forwardRef<HTMLSelectElement, SelectSingleOptionProps>(({
+    id,
+    label,
+    required = false,
+    options,
+    defaultMsgNoOptions = "No options yet, create one"
+}, ref) => {
+    return (
+        <div className={styles.selectSingleOption}>
+            <label htmlFor={id}>{label}</label>
             {options !== null && options.length > 0 ? 
-                <select id={id} required={required}>
+                <select ref={ref} id={id} required={required}>
                     {options.map((option) => (<option value={option.value}>{option.name}</option>))}
                 </select>
             : (<p>{defaultMsgNoOptions}</p>)}
-    </div>
-}
+        </div>
+    );
+});
 
 export default SelectSingleOption;
