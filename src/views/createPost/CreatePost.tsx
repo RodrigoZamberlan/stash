@@ -13,7 +13,7 @@ const CreatePost: React.FC = () => {
     const content = useRef<HTMLTextAreaElement>(null);
     const category = useRef<HTMLSelectElement>(null);
 
-    const { categories } = useCategories();
+    const { categories, loading, error } = useCategories();
     const options = categories.map(category => ({
         "name": category.name,
         "value": category.id,
@@ -29,7 +29,8 @@ const CreatePost: React.FC = () => {
             <InputUncontrolled ref={title} id="title" label="Title" placeholder="Type here the post title" required/>
             <InputUncontrolled ref={description} id="description" label="Description" placeholder="Type here a description to the post"/>
             <TextAreaUncontrolled ref={content} id="content" label="Content" placeholder="Type here the post content" required/>
-            <SelectSingleOption ref={category} id="selectCategory" label="Select the category" options={options} required/>
+            {loading ? <p>Loading</p> : <SelectSingleOption ref={category} id="selectCategory" label="Select the category" options={options} required/>}
+            {error && <p>{error}</p>}
         </Form>
         <div className={styles.secondaryForms}>
             <CategoriesForm/>

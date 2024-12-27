@@ -8,7 +8,7 @@ import { fetchCategories } from "../../services/categoryService";
 
 const CategoriesForm: React.FC = () => {
     const { setCategories } = useCategories();
-    const {createCategoryHandler, loading, errors} = useCreateCategory();
+    const { createCategoryHandler, loading, errors } = useCreateCategory();
     const categoryName = useRef<HTMLInputElement>(null);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -26,7 +26,8 @@ const CategoriesForm: React.FC = () => {
 
     return <div>
         <Form title="Create a new category" submitTextButton="Add" loading={loading} errors={errors} handleSubmit={handleSubmit}>
-            <InputUncontrolled ref={categoryName} id="categoryName" label="Category Name" placeholder="Type here the name of the new category" required={true}/>
+            {loading ? <p>"Loading"</p> : <InputUncontrolled ref={categoryName} id="categoryName" label="Category Name" placeholder="Type here the name of the new category" required={true}/>}
+            {errors && <p>{errors.message}</p>}
         </Form>
     </div>
 }
