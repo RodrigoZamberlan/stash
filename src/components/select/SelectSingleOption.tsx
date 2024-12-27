@@ -26,7 +26,7 @@ const SelectSingleOption = React.forwardRef<HTMLSelectElement, SelectSingleOptio
             <label htmlFor={id}>{label}</label>
             {options !== null && options.length > 0 ? 
                 <select ref={ref} id={id} required={required}>
-                    {options.map((option) => (<option value={option.value}>{option.name}</option>))}
+                    {options.map((option, index) => (<option key={index} value={option.value}>{option.name}</option>))}
                 </select>
             : (<p>{defaultMsgNoOptions}</p>)}
         </div>

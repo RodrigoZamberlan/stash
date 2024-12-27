@@ -18,9 +18,7 @@ const TextAreaUncontrolled = React.forwardRef<HTMLTextAreaElement, TextAreaUncon
 }, ref) => {
     return (<div className={styles.containerTextArea}>
         <label htmlFor={id}>{label} {required && "*"}</label>
-        <textarea ref={ref} id={id} placeholder={placeholder} required={required}>
-            {content}
-        </textarea>
+        <textarea ref={ref} id={id} placeholder={placeholder} required={required} defaultValue={content} />
     </div>)
 });
 
