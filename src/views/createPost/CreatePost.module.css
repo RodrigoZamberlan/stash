@@ -5,4 +5,10 @@
     width: 90%;
     margin: 60px auto;
     width: fit-content;
+    align-items: baseline;
+}
+
+.secondaryForms {
+    display: grid;
+    row-gap: 20px;
 }

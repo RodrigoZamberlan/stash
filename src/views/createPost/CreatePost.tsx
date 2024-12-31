@@ -6,6 +6,8 @@ import TextAreaUncontrolled from "../../components/textarea/TextAreaUncontrolled
 import SelectSingleOption from "../../components/select/SelectSingleOption";
 import { useCategories } from "../../contexts/post/CategoriesContext";
 import CategoriesForm from "../categories/CategoriesForm";
+import SelectMultipleOptions from "../../components/select/SelectMultipleOptions";
+import TagsForm from "../tags/TagsForm";
 
 const CreatePost: React.FC = () => {
     const title = useRef<HTMLInputElement>(null);
@@ -21,6 +23,19 @@ const CreatePost: React.FC = () => {
     }))
 
     const statusOptions = [{name: "Actived", value: "actived"}, {name: "Arquived", value: "arquived"}];
+
+    const tagsOptions = [
+        {name: "tag1", value: "value1"},
+        {name: "tag2", value: "value2"}, 
+        {name: "tag2", value: "value2"},
+        {name: "tag3", value: "value3"},
+        {name: "tag4", value: "value4"},
+        {name: "tag5", value: "value5"},
+        {name: "tag6", value: "value6"},
+        {name: "tag7", value: "value7"},
+        {name: "tag8", value: "value8"},
+        {name: "tag9", value: "value9"},
+    ];
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {  
         event.preventDefault();
@@ -41,10 +56,13 @@ const CreatePost: React.FC = () => {
             {error && <p>{error}</p>}
 
             <SelectSingleOption ref={status} id="status" label="Select the status" options={statusOptions} required/>
+
+            <SelectMultipleOptions id="selectTags" label="Select the tags" options={tagsOptions}/>
             
         </Form>
         <div className={styles.secondaryForms}>
             <CategoriesForm/>
+            <TagsForm/>
         </div>
     </div>
 }

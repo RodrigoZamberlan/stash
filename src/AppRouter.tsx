@@ -5,7 +5,7 @@ import Home from './views/home/Home';
 import Login from './views/login/Login';
 import Register from './views/register/Register';
 import Categories from './views/categories/CategoriesForm';
-import Tags from './views/tags/Tags';
+import Tags from './views/tags/TagsForm';
 import CreatePost from './views/createPost/CreatePost';
 
 const AppRouter: React.FC = () => {

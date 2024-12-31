@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './SelectSingleOption.module.css';
+import styles from './Select.module.css';
 
 export type Option = {
     name: string, 
@@ -22,10 +22,10 @@ const SelectSingleOption = React.forwardRef<HTMLSelectElement, SelectSingleOptio
     defaultMsgNoOptions = "No options yet, create one"
 }, ref) => {
     return (
-        <div className={styles.selectSingleOption}>
-            <label htmlFor={id}>{label}</label>
+        <div>
+            <label className={styles.selectLabel} htmlFor={id}>{label}</label>
             {options !== null && options.length > 0 ? 
-                <select ref={ref} id={id} required={required}>
+                <select className={styles.select} ref={ref} id={id} required={required}>
                     {options.map((option, index) => (<option key={index} value={option.value}>{option.name}</option>))}
                 </select>
             : (<p>{defaultMsgNoOptions}</p>)}
