@@ -1,32 +1,33 @@
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { fetchCategories } from '../../services/categoryService';
 import { Category } from '../../types/Category';
 
 interface CategoriesContextType {
   categories: Category[];
   setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
-  loading: boolean;
-  error: string | null;
+  loadingCategories: boolean;
+  errorCategories: string | null;
 }
 
 const CategoriesContext = createContext<CategoriesContextType | undefined>(undefined);
 
-export const CategoriesProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const CategoriesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [loadingCategories, setLoadingCategories] = useState(false);
+  const [errorCategories, setErrorCategories] = useState<string | null>(null);
 
   useEffect(() => {
     const loadCategories = async () => {
       try {
-        setLoading(true);
+        setLoadingCategories(true);
         const categoriesFetched = await fetchCategories();
         setCategories(categoriesFetched);
-        setLoading(false);
       } catch (error) {
-        setLoading(false);
-        setError("Failed to fetch the categories");
+        setLoadingCategories(false);
+        setErrorCategories("Failed to fetch the categories");
         console.error("Failed to fetch the categories", error);
+      } finally {
+        setLoadingCategories(false);
       }
     }
 
@@ -34,7 +35,7 @@ export const CategoriesProvider: React.FC<{ children: ReactNode }> = ({ children
   }, []);
 
   return (
-    <CategoriesContext.Provider value={{ categories, setCategories, loading, error }}>
+    <CategoriesContext.Provider value={{ categories, setCategories, loadingCategories, errorCategories }}>
       {children}
     </CategoriesContext.Provider>
   );

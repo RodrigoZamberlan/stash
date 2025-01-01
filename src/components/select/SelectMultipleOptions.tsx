@@ -5,10 +5,11 @@ import { Option } from "./SelectSingleOption";
 interface SelectMultipleOptionsProps {
     id: string,
     label: string,
+    placeholderInputSearch?: string,
     options: Option[]
 }
 
-const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({id, label, options}) => {
+const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({id, label, placeholderInputSearch = "Type to search the option", options}) => {
     const [searchTextOption, setSearchTextOption] = useState("");
     const [filteredOptions, setFilteredOptions] = useState<Option[] | null>(options);
 
@@ -27,7 +28,7 @@ const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({id, label,
     return (
         <div>
             <label className={styles.selectLabel} htmlFor={id}>{label}</label>
-            <input className={styles.inputSearch} type="text" id={id} onChange={handleChangeSearch} value={searchTextOption}/>
+            <input className={styles.inputSearch} type="text" id={id} placeholder={placeholderInputSearch} onChange={handleChangeSearch} value={searchTextOption}/>
             <div className={styles.listOfOptions}>
                 {filteredOptions && filteredOptions.map((option, index) => (
                     <div key={index}>
