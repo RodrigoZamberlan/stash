@@ -1,11 +1,13 @@
-import { Category } from "./Category"
-import { Tag } from "./Tag"
+type PostTag = {
+    tagId: number;
+}
 
 export type Post = {
-    title: String,
-    description?: String,
-    content: String,
-    status: boolean,
-    tags?: Tag[],
-    category: Category
+    title: string,
+    description?: string,
+    content: string,
+    status: string,
+    postTags?: PostTag[],
+    categoryId: number,
+    userId: number
 }

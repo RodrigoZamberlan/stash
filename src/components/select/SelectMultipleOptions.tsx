@@ -1,17 +1,23 @@
 import { useState } from "react";
 import styles from './Select.module.css';
-import { Option } from "./SelectSingleOption";
+
+export type Option = {
+    name: string, 
+    value: string | number | undefined
+}
 
 interface SelectMultipleOptionsProps {
     id: string,
     label: string,
     placeholderInputSearch?: string,
-    options: Option[]
+    options: Option[],
+    onSelectionChange: (selected: Option[]) => void
 }
 
-const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({id, label, placeholderInputSearch = "Type to search the option", options}) => {
+const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({id, label, placeholderInputSearch = "Type to search the option", options, onSelectionChange}) => {
     const [searchTextOption, setSearchTextOption] = useState("");
     const [filteredOptions, setFilteredOptions] = useState<Option[] | null>(options);
+    const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
 
     const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = event.target.value;
@@ -24,6 +30,18 @@ const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({id, label,
             setFilteredOptions(options);
         }
     }
+
+    const isOptionChecked = (option: Option) => {
+        return selectedOptions.some((selected) => selected.value === option.value);
+    }
+
+    const handleOptionToggle = (option: Option) => {
+        const isSelected = isOptionChecked(option);
+
+        const updatedSelection = isSelected ? selectedOptions.filter((selected) => selected.value !== option.value) : [...selectedOptions, option];
+        setSelectedOptions(updatedSelection);
+        onSelectionChange(updatedSelection);
+    }
     
     return (
         <div>
@@ -32,7 +50,12 @@ const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({id, label,
             <div className={styles.listOfOptions}>
                 {filteredOptions && filteredOptions.map((option, index) => (
                     <div key={index}>
-                        <input type="checkbox" value={option.value}/>
+                        <input 
+                            type="checkbox" 
+                            value={option.value} 
+                            checked={isOptionChecked(option)} 
+                            onChange={() => handleOptionToggle(option)}
+                        />
                         <label>{option.name}</label>
                     </div>
                 ))}

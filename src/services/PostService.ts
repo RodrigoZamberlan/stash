@@ -5,10 +5,10 @@ export const fetchPosts = async () => {
     return apiClient<Post[]>('/posts');
 }
 
-export const createPost = (postData: Post) => {
-    return apiClient<Post>('/posts/add'), {
-        method: 'Post',
-        body: JSON.stringify(postData)
-    }
-}
+export const createPost = async (postData: Post): Promise<Post> => {
+    return apiClient<Post>('/posts/add', {
+        method: 'POST',
+        body: JSON.stringify(postData),
+    });
+};
 
