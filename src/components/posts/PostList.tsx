@@ -26,9 +26,9 @@ const PostList: React.FC = () => {
     }, []);
 
     return <div className={styles.listOfPosts}>
-        {listOfPosts.length === 0 && <p>No post's yet! Go ahead and create the first one.</p>}
+        {error === null && !loading && listOfPosts.length === 0 ? <p>No post's yet! Go ahead and create the first one.</p> : ""}
         {loading ? <p>Loading</p> : listOfPosts.map((post, index) => (<div key={index}><Post post={post}/></div>))}
-        {error && <p>{error}</p>}
+        {!loading && error ? <p>{error}</p> : ""}
     </div>
 }
 
