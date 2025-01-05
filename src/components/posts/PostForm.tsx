@@ -1,13 +1,13 @@
 import { useRef, useState } from "react";
 import styles from "./Post.module.css";
-import Form from "../../components/form/Form";
-import InputUncontrolled from "../../components/input/InputUncontrolled";
-import TextAreaUncontrolled from "../../components/textarea/TextAreaUncontrolled";
-import SelectSingleOption from "../../components/select/SelectSingleOption";
+import Form from "../form/Form";
+import InputUncontrolled from "../input/InputUncontrolled";
+import TextAreaUncontrolled from "../textarea/TextAreaUncontrolled";
+import SelectSingleOption from "../select/SelectSingleOption";
 import { useCategories } from "../../contexts/post/CategoriesContext";
-import CategoriesForm from "../categories/CategoriesForm";
-import SelectMultipleOptions, { Option } from "../../components/select/SelectMultipleOptions";
-import TagsForm from "../tags/TagsForm";
+import CategoriesForm from "../../views/categories/CategoriesForm";
+import SelectMultipleOptions, { Option } from "../select/SelectMultipleOptions";
+import TagsForm from "../../views/tags/TagsForm";
 import { useTags } from "../../contexts/post/TagsContext";
 import { PostType } from "../../types/PostType";
 import { useCreatePost } from "../../hooks/useCreatePost";
@@ -19,6 +19,7 @@ const PostForm: React.FC = () => {
     const content = useRef<HTMLTextAreaElement>(null);
     const category = useRef<HTMLSelectElement>(null);
     const status = useRef<HTMLSelectElement>(null);
+    const link = useRef<HTMLInputElement>(null);
 
     const [selectedTags, setSelectedaTags] = useState<Option[]>([]);
 
@@ -50,7 +51,8 @@ const PostForm: React.FC = () => {
                 categoryId: parseInt(category.current.value),
                 status: status.current?.value || "Actived",
                 postTags: selectedTags.map((tag) => ({ tagId: Number(tag.value) })),
-                userId: 2 //That needs to be changed to get the user logged ID
+                userId: 2, //That needs to be changed to get the user logged ID
+                link: link.current?.value || ""
             }
 
             const postIsCreated = await createPostHandler(newPost);
@@ -76,6 +78,8 @@ const PostForm: React.FC = () => {
 
             {loadingTags ? <p>Loading</p> : <SelectMultipleOptions id="selectTags" label="Select the tags" placeholderInputSearch="Type to search the tag" options={tagsOptions} onSelectionChange={setSelectedaTags}/>}
             {errorTags && <p>{errorTags}</p>}
+
+            <InputUncontrolled ref={link} id="link" label="Link" placeholder="Type the external link if necessary"/>
             
         </Form>
         <div className={styles.secondaryForms}>

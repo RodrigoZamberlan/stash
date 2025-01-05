@@ -51,17 +51,21 @@
     padding: 12px 8px;
     opacity: 0;
     transition: opacity 0.3s ease;
+    color: #fff;
 }
 
 .post .textContent h3, p {
     margin: 0;
+    padding-bottom: 4px;
 }
 
 .post .textContent h3 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
 .post .textContent p {
     height: 42px;
     font-size: .9rem;
+    line-height: 20px;
+    font-weight: 200;
 }

@@ -1,0 +1,17 @@
+.introSection {
+    width: 1200px;
+    margin: auto;
+    text-align: left;
+    padding-bottom: 30px;
+}
+
+.introSection h1 {
+    font-size: 5rem;
+    letter-spacing: 1px;
+}
+
+.introSection p {
+    width: 650px;
+    line-height: 24px;
+    color: #ccc;
+}

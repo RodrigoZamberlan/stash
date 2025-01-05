@@ -6,8 +6,8 @@ import Login from './views/login/Login';
 import Register from './views/register/Register';
 import Categories from './views/categories/CategoriesForm';
 import Tags from './views/tags/TagsForm';
-import PostForm from './views/post/PostForm';
-import PostList from './views/post/PostList';
+import PostForm from './components/posts/PostForm';
+import PostsView from './views/posts/PostsView';
 
 const AppRouter: React.FC = () => {
     return (<Router>
@@ -19,7 +19,7 @@ const AppRouter: React.FC = () => {
                     <Route path='/categories' element={<Categories />}></Route>
                     <Route path='/tags' element={<Tags />}></Route>
                     <Route path='/create-post' element={<PostForm />}></Route>
-                    <Route path='/posts' element={<PostList />}></Route>
+                    <Route path='/posts' element={<PostsView />}></Route>
                 </Routes>
             </Router>);
 }

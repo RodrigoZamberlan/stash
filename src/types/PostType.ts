@@ -10,5 +10,6 @@ export type PostType = {
     status: string,
     postTags?: PostTagType[],
     categoryId: number,
-    userId: number
+    userId: number,
+    link?: string
 }

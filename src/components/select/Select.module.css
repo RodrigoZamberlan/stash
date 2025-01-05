@@ -8,7 +8,7 @@
     height: 40px;
     padding-left: 6px;
     font-family: Arial;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .inputSearch {
@@ -23,4 +23,5 @@
     max-height: 95px;
     overflow-y: scroll;
     border: 2px solid #333;
+    margin-bottom: 20px;
 }
