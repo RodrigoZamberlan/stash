@@ -1,6 +1,4 @@
-import { Post } from "./Post";
-
-export type Tag = {
+export type TagType = {
     id?: number,
     name: string,
     posts?: number[]

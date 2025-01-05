@@ -1,19 +1,19 @@
 import { apiClient } from "./apiClient"
-import { User } from "../types/User";
+import { UserType } from "../types/UserType";
 
 export const fetchUsers = async () => {
-    return apiClient<User[]>('/users');
+    return apiClient<UserType[]>('/users');
 }
 
-export const createUser = async (userData: User) => {
-    return apiClient<User>('/users/register', {
+export const createUser = async (userData: UserType) => {
+    return apiClient<UserType>('/users/register', {
         method: 'Post',
         body: JSON.stringify(userData),
     });
 }
 
 export const authUser = async (email: string, password: string) => {
-    return apiClient<User>('/users/auth', {
+    return apiClient<UserType>('/users/auth', {
         method: 'Post',
         body: JSON.stringify({email, password})
     })

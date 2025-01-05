@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Tag } from "../../types/Tag";
+import { TagType } from "../../types/TagType";
 import { fetchTags } from "../../services/tagService";
 
 interface TagsContextType {
-    tags: Tag[];
-    setTags: React.Dispatch<React.SetStateAction<Tag[]>>;
+    tags: TagType[];
+    setTags: React.Dispatch<React.SetStateAction<TagType[]>>;
     loadingTags: boolean;
     errorTags: string | null;
 }
@@ -12,7 +12,7 @@ interface TagsContextType {
 export const TagsContext = createContext<TagsContextType | undefined>(undefined);
 
 export const TagsProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
-    const [tags, setTags] = useState<Tag[]>([]);
+    const [tags, setTags] = useState<TagType[]>([]);
     const [loadingTags, setLoadingTags] = useState(false);
     const [errorTags, setErrorTags] = useState<string | null>(null);
 

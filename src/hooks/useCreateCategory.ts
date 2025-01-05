@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Category } from "../types/Category";
+import { CategoryType } from "../types/CategoryType";
 import { createCategory } from "../services/categoryService";
 
 export const useCreateCategory = () => {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState<{message: string} | null>(null);
 
-    const createCategoryHandler = async (categoryData: Category) => {
+    const createCategoryHandler = async (categoryData: CategoryType) => {
         setLoading(true);
 
         try {

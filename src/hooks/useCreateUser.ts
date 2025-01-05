@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { createUser } from "../services/userService";
-import { User } from "../types/User";
+import { UserType } from "../types/UserType";
 
 export const useCreateUser = () => {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState<{message: string} | null>(null);
     
-    const createUserHandler = async (userData: User) => {
+    const createUserHandler = async (userData: UserType) => {
         setLoading(true);
 
         try {

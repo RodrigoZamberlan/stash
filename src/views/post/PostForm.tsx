@@ -9,11 +9,12 @@ import CategoriesForm from "../categories/CategoriesForm";
 import SelectMultipleOptions, { Option } from "../../components/select/SelectMultipleOptions";
 import TagsForm from "../tags/TagsForm";
 import { useTags } from "../../contexts/post/TagsContext";
-import { Post } from "../../types/Post";
+import { PostType } from "../../types/PostType";
 import { useCreatePost } from "../../hooks/useCreatePost";
 
 const PostForm: React.FC = () => {
     const title = useRef<HTMLInputElement>(null);
+    const coverImage = useRef<HTMLInputElement>(null);
     const description = useRef<HTMLInputElement>(null);
     const content = useRef<HTMLTextAreaElement>(null);
     const category = useRef<HTMLSelectElement>(null);
@@ -40,9 +41,10 @@ const PostForm: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {  
         event.preventDefault();
 
-        if (title.current && content.current && category.current && category.current) {
-            const newPost: Post = {
+        if (title.current && coverImage.current && content.current && category.current && category.current) {
+            const newPost: PostType = {
                 title: title.current?.value,
+                coverImage: coverImage.current?.value,
                 description: description.current?.value || "",
                 content: content.current?.value,
                 categoryId: parseInt(category.current.value),
@@ -63,6 +65,7 @@ const PostForm: React.FC = () => {
     return <div className={styles.postPage}>
         <Form title="Create a Post" handleSubmit={handleSubmit} loading={loading} errors={errors}>
             <InputUncontrolled ref={title} id="title" label="Title" placeholder="Type here the post title" required/>
+            <InputUncontrolled ref={coverImage} id="coverImage" label="Cover Image" placeholder="Type here the image's url" required/>
             <InputUncontrolled ref={description} id="description" label="Description" placeholder="Type here a description to the post"/>
             <TextAreaUncontrolled ref={content} id="content" label="Content" placeholder="Type here the post content" required/>
             

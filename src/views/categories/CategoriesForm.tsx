@@ -2,7 +2,7 @@ import { useRef } from "react";
 import Form from "../../components/form/Form";
 import InputUncontrolled from "../../components/input/InputUncontrolled";
 import { useCreateCategory } from "../../hooks/useCreateCategory";
-import { Category } from "../../types/Category";
+import { CategoryType } from "../../types/CategoryType";
 import { useCategories } from "../../contexts/post/CategoriesContext";
 import { fetchCategories } from "../../services/categoryService";
 
@@ -14,7 +14,7 @@ const CategoriesForm: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (categoryName.current && categoryName.current.value) {
-            const newCategory: Category = { name:  categoryName.current.value };
+            const newCategory: CategoryType = { name:  categoryName.current.value };
             const success = await createCategoryHandler(newCategory);
             if (success) {
                 const updatedCategories = await fetchCategories();

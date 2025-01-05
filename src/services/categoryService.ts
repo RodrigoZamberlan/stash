@@ -1,12 +1,12 @@
-import { Category } from "../types/Category";
+import { CategoryType } from "../types/CategoryType";
 import { apiClient } from "./apiClient"
 
 export const fetchCategories = async () => {
-    return apiClient<Category[]>('/categories');
+    return apiClient<CategoryType[]>('/categories');
 }
 
-export const createCategory = (categoryData: Category) => {
-    return apiClient<Category>('/categories/add', {
+export const createCategory = (categoryData: CategoryType) => {
+    return apiClient<CategoryType>('/categories/add', {
         method: 'Post',
         body: JSON.stringify(categoryData)
     });

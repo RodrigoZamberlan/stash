@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Tag } from "../types/Tag";
+import { TagType } from "../types/TagType";
 import { createTag } from "../services/tagService";
 
 export const useCreateTag = () => {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState<{message: string} | null>(null); 
 
-    const createTagHandler = async (tagData: Tag) => {
+    const createTagHandler = async (tagData: TagType) => {
         setLoading(true);
 
         try {

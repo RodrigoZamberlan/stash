@@ -1,12 +1,12 @@
-import { Tag } from "../types/Tag";
+import { TagType } from "../types/TagType";
 import { apiClient } from "./apiClient"
 
 export const fetchTags = async () => {
-    return apiClient<Tag[]>('/tags');
+    return apiClient<TagType[]>('/tags');
 }
 
-export const createTag = (tagData: Tag) => {
-    return apiClient<Tag>('/tags/add', {
+export const createTag = (tagData: TagType) => {
+    return apiClient<TagType>('/tags/add', {
         method: 'Post',
         body: JSON.stringify(tagData)
     });

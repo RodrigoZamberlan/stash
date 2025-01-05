@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { createPost } from "../services/PostService";
-import { Post } from "../types/Post";
+import { PostType } from "../types/PostType";
 
 export const useCreatePost = () => {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState<{message: string} | null>(null); 
 
-    const createPostHandler = async (postData: Post): Promise<boolean> => {
+    const createPostHandler = async (postData: PostType): Promise<boolean> => {
         try {
             setLoading(true);
             setErrors(null);

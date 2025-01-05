@@ -1,13 +1,14 @@
-type PostTag = {
+type PostTagType = {
     tagId: number;
 }
 
-export type Post = {
+export type PostType = {
     title: string,
+    coverImage: string,
     description?: string,
     content: string,
     status: string,
-    postTags?: PostTag[],
+    postTags?: PostTagType[],
     categoryId: number,
     userId: number
 }

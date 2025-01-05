@@ -1,12 +1,12 @@
 import { apiClient } from "./apiClient"
-import { Post } from "../types/Post";
+import { PostType } from "../types/PostType";
 
 export const fetchPosts = async () => {
-    return apiClient<Post[]>('/posts');
+    return apiClient<PostType[]>('/posts');
 }
 
-export const createPost = async (postData: Post): Promise<Post> => {
-    return apiClient<Post>('/posts/add', {
+export const createPost = async (postData: PostType): Promise<PostType> => {
+    return apiClient<PostType>('/posts/add', {
         method: 'POST',
         body: JSON.stringify(postData),
     });

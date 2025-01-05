@@ -1,7 +1,7 @@
 import { createContext, ReactNode } from 'react';
-import { User } from '../../types/User';
+import { UserType } from '../../types/UserType';
 
-export const UserContext = createContext<User | undefined>(undefined);
+export const UserContext = createContext<UserType | undefined>(undefined);
 
 interface UserProviderProps {
     children: ReactNode;

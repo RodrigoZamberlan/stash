@@ -12,3 +12,56 @@
     display: grid;
     row-gap: 20px;
 }
+
+.listOfPosts {
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.post {
+    position: relative;
+    overflow: hidden;
+}
+
+.post img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    height: 300px;
+    transition: all 0.3s ease;
+}
+
+.post:hover img {
+    opacity: .4;
+}
+
+.post:hover .textContent {
+    opacity: 1;   
+}
+
+.post .textContent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    text-align: left;
+    padding: 12px 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.post .textContent h3, p {
+    margin: 0;
+}
+
+.post .textContent h3 {
+    font-size: 1.2rem;
+}
+
+.post .textContent p {
+    height: 42px;
+    font-size: .9rem;
+}
