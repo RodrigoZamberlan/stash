@@ -39,7 +39,7 @@ const TableCrud: React.FC<TableCrudProps> = ({ list }) => {
 
 const PostManager: React.FC = () => {
   const { listOfPosts, statusFetchingPosts } = useListOfPosts();
-
+  const navigate = useNavigate();
   return (
     <div>
       <h1>So what you want to do?</h1>
@@ -47,7 +47,7 @@ const PostManager: React.FC = () => {
         Here's the list of all current posts registered, you can edit delete or
         click above to create a new one.
       </p>
-      <Button>Create new</Button>
+      <Button handleClick={() => { navigate('/post-create') }}>Create new</Button>
       <div>
         {statusFetchingPosts === "success" ? (
           <TableCrud list={listOfPosts} />

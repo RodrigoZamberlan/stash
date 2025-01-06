@@ -1,6 +1,8 @@
-type PostTagType = {
-    tagId: number;
-}
+// export type PostTagType = {
+//     tagId: number;
+// }
+
+import { TagType } from "./TagType"
 
 export type PostType = {
     id?: number,
@@ -9,7 +11,7 @@ export type PostType = {
     description?: string,
     content: string,
     status: string,
-    postTags?: PostTagType[],
+    postTags?: TagType[],
     categoryId: number,
     userId: number,
     link?: string

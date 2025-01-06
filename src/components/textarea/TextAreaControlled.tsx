@@ -14,12 +14,12 @@ const TextAreaControlled: React.FC<TextAreaControlledProps> = ({
     label, 
     placeholder,
     required = false,
-    value = "",
+    value,
     handleChange
 }) => {
     return (<div className={styles.containerTextArea}>
         <label htmlFor={id}>{label} {required && "*"}</label>
-        <textarea id={id} placeholder={placeholder} required={required} defaultValue={value} value={value} onChange={handleChange} />
+        <textarea id={id} name={id} placeholder={placeholder} required={required} value={value} onChange={handleChange} />
     </div>)
 }
 

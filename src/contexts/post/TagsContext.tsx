@@ -5,29 +5,24 @@ import { fetchTags } from "../../services/tagService";
 interface TagsContextType {
     tags: TagType[];
     setTags: React.Dispatch<React.SetStateAction<TagType[]>>;
-    loadingTags: boolean;
-    errorTags: string | null;
+    statusFetchingTags: string;
 }
 
 export const TagsContext = createContext<TagsContextType | undefined>(undefined);
 
 export const TagsProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
     const [tags, setTags] = useState<TagType[]>([]);
-    const [loadingTags, setLoadingTags] = useState(false);
-    const [errorTags, setErrorTags] = useState<string | null>(null);
+    const [statusFetchingTags, setStatusFetchingTags] = useState("idle");
 
     useEffect(() => {
         const loadTags = async () => {
             try {
-                setLoadingTags(true);
+                setStatusFetchingTags("loading...");
                 const tagsFetched = await fetchTags();
                 setTags(tagsFetched);
+                setStatusFetchingTags("success");
             } catch (error) {
-                setLoadingTags(false);
-                setErrorTags("Failed to fetch the tags");
-                console.error("Failed to fetch the tags", error);
-            } finally {
-                setLoadingTags(false);
+                setStatusFetchingTags(error instanceof Error ? error.message : "Failed to fetch the tags")
             }
         }
 
@@ -35,7 +30,7 @@ export const TagsProvider: React.FC<{children: React.ReactNode}> = ({children}) 
     }, []);
 
     return (
-        <TagsContext.Provider value={{tags, setTags, loadingTags, errorTags}}>
+        <TagsContext.Provider value={{tags, setTags, statusFetchingTags}}>
             {children}
         </TagsContext.Provider>
     )

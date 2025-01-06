@@ -3,22 +3,17 @@ import { createPost } from "../services/PostService";
 import { PostType } from "../types/PostType";
 
 export const useCreatePost = () => {
-    const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState<{message: string} | null>(null); 
+    const [statusCreatingPost, setStatusCreatingPost] = useState("idle");
 
-    const createPostHandler = async (postData: PostType): Promise<boolean> => {
+    const createPostHandler = async (postData: PostType) => {
         try {
-            setLoading(true);
-            setErrors(null);
+            setStatusCreatingPost("loading...");
             await createPost(postData);
-            setLoading(false);
-            return true;
+            setStatusCreatingPost("success");
         } catch (error) {
-            setErrors(error instanceof Error ? error : {message: "Failed to create the post"});
-            setLoading(false);
-            return false;
+            setStatusCreatingPost(error instanceof Error ? error.message : "Failed to create the post");
         }
     };
 
-    return { createPostHandler, loading, errors };
+    return { createPostHandler, statusCreatingPost };
 };

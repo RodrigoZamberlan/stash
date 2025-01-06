@@ -5,29 +5,29 @@ import { CategoryType } from '../../types/CategoryType';
 interface CategoriesContextType {
   categories: CategoryType[];
   setCategories: React.Dispatch<React.SetStateAction<CategoryType[]>>;
-  loadingCategories: boolean;
-  errorCategories: string | null;
+  statusFetchingCategories: string;
 }
 
 const CategoriesContext = createContext<CategoriesContextType | undefined>(undefined);
 
 export const CategoriesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [categories, setCategories] = useState<CategoryType[]>([]);
-  const [loadingCategories, setLoadingCategories] = useState(false);
-  const [errorCategories, setErrorCategories] = useState<string | null>(null);
+  const [statusFetchingCategories, setStatusFetchingCategories] = useState("idle");
 
   useEffect(() => {
     const loadCategories = async () => {
       try {
-        setLoadingCategories(true);
+        setStatusFetchingCategories("loading...");
         const categoriesFetched = await fetchCategories();
         setCategories(categoriesFetched);
+
+        if (categoriesFetched.length === 0) {
+          setStatusFetchingCategories("The list of categories is empty. Create one first!"); 
+        } else {
+          setStatusFetchingCategories("success");
+        }
       } catch (error) {
-        setLoadingCategories(false);
-        setErrorCategories("Failed to fetch the categories");
-        console.error("Failed to fetch the categories", error);
-      } finally {
-        setLoadingCategories(false);
+        setStatusFetchingCategories(error instanceof Error ? error.message : "Failed to fetch the categories");
       }
     }
 
@@ -35,7 +35,7 @@ export const CategoriesProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   }, []);
 
   return (
-    <CategoriesContext.Provider value={{ categories, setCategories, loadingCategories, errorCategories }}>
+    <CategoriesContext.Provider value={{ categories, setCategories, statusFetchingCategories }}>
       {children}
     </CategoriesContext.Provider>
   );

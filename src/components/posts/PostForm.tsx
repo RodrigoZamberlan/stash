@@ -1,28 +1,28 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import styles from "./Post.module.css";
 import Form from "../form/Form";
-import InputUncontrolled from "../input/InputUncontrolled";
-import TextAreaUncontrolled from "../textarea/TextAreaUncontrolled";
-import SelectSingleOption from "../select/SelectSingleOption";
 import { useCategories } from "../../contexts/post/CategoriesContext";
 import CategoriesForm from "../../views/categories/CategoriesForm";
-import SelectMultipleOptions, { Option } from "../select/SelectMultipleOptions";
 import TagsForm from "../../views/tags/TagsForm";
-import { useTags } from "../../contexts/post/TagsContext";
 import { useLocation } from "react-router-dom";
 import { PostType } from "../../types/PostType";
 import InputControlled from "../input/InputControlled";
 import TextAreaControlled from "../textarea/TextAreaControlled";
+import SelectTags from "./SelectTags";
+import { TagType } from "../../types/TagType";
+import { useCreatePost } from "../../hooks/useCreatePost";
 
 const PostForm: React.FC = () => {
+    const { createPostHandler, statusCreatingPost } = useCreatePost();
+
     const defaultFormData = {
         title: "",
         coverImage: "",
         description: "",
         content: "",
-        status: "",
+        status: "arquived",
         postTags: [],
-        categoryId: 1,
+        categoryId: 0,
         userId: 2,
         link: ""
     }
@@ -32,7 +32,9 @@ const PostForm: React.FC = () => {
     const formMode = postDataFromRoute ? "edit" : "create";
     const [formData, setFormData] = useState<PostType>(postDataFromRoute || defaultFormData);
     
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    console.log(formData);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
         setFormData(prev => ({
           ...prev,
@@ -40,64 +42,29 @@ const PostForm: React.FC = () => {
         }));
     }
 
-    let formTitle = "";
-    let handleSubmit = () => {};
-    if (formMode === "create") {
-        formTitle = "Create a post";
-        handleSubmit = () => {};
-    } else {
-        formTitle = "Edit the post";
-        handleSubmit = () => {};
+    const handleTagsChange = (updatedTags: TagType[]) => {
+        setFormData((prev) => ({
+            ...prev,
+            postTags: updatedTags
+        }));
     }
 
-    // const title = useRef<HTMLInputElement>(null);
-    // const coverImage = useRef<HTMLInputElement>(null);
-    // const description = useRef<HTMLInputElement>(null);
-    // const content = useRef<HTMLTextAreaElement>(null);
-    // const category = useRef<HTMLSelectElement>(null);
-    // const status = useRef<HTMLSelectElement>(null);
-    // const link = useRef<HTMLInputElement>(null);
+    const { categories, statusFetchingCategories } = useCategories();
 
-    // const [selectedTags, setSelectedaTags] = useState<Option[]>([]);
+    let formTitle = "";
+    
+    if (formMode === "create") {
+        formTitle = "Create a post";
+        
+    } else {
+        formTitle = "Edit the post";
+    }
 
-    // const { categories, loadingCategories, errorCategories } = useCategories();
-    // const categoriesOptions = categories.map(category => ({
-    //     "name": category.name,
-    //     "value": category.id,
-    // }))
-
-    // const statusOptions = [{name: "Actived", value: "actived"}, {name: "Arquived", value: "arquived"}];
-
-    // const { tags, loadingTags, errorTags } = useTags();
-    // const tagsOptions = tags.map((tag) => ({
-    //     "name": tag.name,
-    //     "value": tag.id
-    // }));
-
-    // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {  
-    //     event.preventDefault();
-
-    //     if (title.current && coverImage.current && content.current && category.current && category.current) {
-    //         const newPost: PostType = {
-    //             title: title.current?.value,
-    //             coverImage: coverImage.current?.value,
-    //             description: description.current?.value || "",
-    //             content: content.current?.value,
-    //             categoryId: parseInt(category.current.value),
-    //             status: status.current?.value || "Actived",
-    //             postTags: selectedTags.map((tag) => ({ tagId: Number(tag.value) })),
-    //             userId: 2, //That needs to be changed to get the user logged ID
-    //             link: link.current?.value || ""
-    //         }
-
-    //         const postIsCreated = await createPostHandler(newPost);
-    //         if (postIsCreated) {
-    //             console.log("post created successffully");
-    //         }
-    //     } else {
-    //         console.error("All the required fields should not be empty");
-    //     }
-    // }
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.log(formData);
+        createPostHandler(formData);
+    }
 
     return <div className={styles.postPage}>
         <Form title={formTitle} handleSubmit={handleSubmit}>
@@ -132,20 +99,27 @@ const PostForm: React.FC = () => {
                 label="Content"
                 placeholder="Type here a short description"
                 value={formData.content}
+                required={true}
                 handleChange={handleChange}
             />
-            {/* <InputUncontrolled ref={title} id="title" label="Title" placeholder="Type here the post title" required/>
-            <InputUncontrolled ref={coverImage} id="coverImage" label="Cover Image" placeholder="Type here the image's url" required/>
-            <InputUncontrolled ref={description} id="description" label="Description" placeholder="Type here a description to the post"/>
-            <TextAreaUncontrolled ref={content} id="content" label="Content" placeholder="Type here the post content" required/> */}
+
+            <label htmlFor="categories">Select the category</label>
+            {statusFetchingCategories === "success" ? <select name="categoryId" id="categoryId" value={formData.categoryId} onChange={handleChange}>
+                {categories && categories.map((category, index) => (
+                    <option 
+                        key={index}
+                        value={category.id}
+                    >{category.name}</option>
+                ))}
+            </select> : <p>{statusFetchingCategories}</p>}
+
+            <SelectTags value={formData.postTags} handleChange={handleTagsChange}/>
             
-            {/* {loadingCategories ? <p>Loading</p> : <SelectSingleOption ref={category} id="selectCategory" label="Select the category" options={categoriesOptions} required/>}
-            {errorCategories && <p>{errorCategories}</p>}
-
-            <SelectSingleOption ref={status} id="status" label="Select the status" options={statusOptions} required/> */}
-
-            {/* {loadingTags ? <p>Loading</p> : <SelectMultipleOptions id="selectTags" label="Select the tags" placeholderInputSearch="Type to search the tag" options={tagsOptions} onSelectionChange={setSelectedaTags}/>}
-            {errorTags && <p>{errorTags}</p>} */}
+            <label htmlFor="status">Status</label>
+            <select name="status" id="status" value={formData.status} onChange={handleChange}>
+                <option value="active">Active</option>
+                <option value="arquived">Arquived</option>
+            </select>
 
             <InputControlled
                 id="link"

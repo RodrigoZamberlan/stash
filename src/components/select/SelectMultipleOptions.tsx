@@ -11,19 +11,27 @@ interface SelectMultipleOptionsProps {
     label: string,
     placeholderInputSearch?: string,
     options: Option[],
-    onSelectionChange: (selected: Option[]) => void
+    value: Option[],
+    handleChange: () => void
 }
 
-const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({id, label, placeholderInputSearch = "Type to search the option", options, onSelectionChange}) => {
+const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({
+        id,
+        label,
+        placeholderInputSearch = "Type to search the option",
+        options,
+        value,
+        handleChange
+    }) => {
     const [searchTextOption, setSearchTextOption] = useState("");
     const [filteredOptions, setFilteredOptions] = useState<Option[] | null>(options);
-    const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+    const [selectedOptions, setSelectedOptions] = useState<Option[]>(value);
 
     const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = event.target.value;
         setSearchTextOption(searchTerm);
 
-        const resultsFiltered = options.filter((option) => option.name.toLowerCase().includes(searchTerm));
+        const resultsFiltered = options.filter((option) => option.name.toLowerCase().includes(searchTerm.toLowerCase()));
         if (searchTerm.length > 0) {
             setFilteredOptions(resultsFiltered);
         } else {
@@ -40,7 +48,6 @@ const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({id, label,
 
         const updatedSelection = isSelected ? selectedOptions.filter((selected) => selected.value !== option.value) : [...selectedOptions, option];
         setSelectedOptions(updatedSelection);
-        onSelectionChange(updatedSelection);
     }
     
     return (
@@ -51,12 +58,13 @@ const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({id, label,
                 {filteredOptions && filteredOptions.map((option, index) => (
                     <div key={index}>
                         <input 
+                            id={`checkbox-${option.name}`}
                             type="checkbox" 
                             value={option.value} 
                             checked={isOptionChecked(option)} 
                             onChange={() => handleOptionToggle(option)}
                         />
-                        <label>{option.name}</label>
+                        <label htmlFor={`checkbox-${option.name}`}>{option.name}</label>
                     </div>
                 ))}
             </div>
