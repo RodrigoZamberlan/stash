@@ -3,6 +3,7 @@ type PostTagType = {
 }
 
 export type PostType = {
+    id?: number,
     title: string,
     coverImage: string,
     description?: string,
