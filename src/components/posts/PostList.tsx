@@ -4,9 +4,10 @@ import { useListOfPosts } from "../../hooks/useListOfPosts";
 
 const PostList: React.FC = () => {
     const { listOfPosts, statusFetchingPosts } = useListOfPosts();
+    const listOfActivePosts = listOfPosts.filter(post => post.status === "active");
 
     return <div className={styles.listOfPosts}>
-        {statusFetchingPosts === "success" ? listOfPosts.map((post, index) => (<div key={index}><Post post={post}/></div>)) : <p>{statusFetchingPosts}</p>}
+        {statusFetchingPosts === "success" && listOfActivePosts.length > 0 ? listOfActivePosts.map((post, index) => (<div key={index}><Post post={post}/></div>)) : <p>{statusFetchingPosts}</p>}
     </div>
 }
 
