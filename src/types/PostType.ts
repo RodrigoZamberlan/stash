@@ -1,7 +1,3 @@
-// export type PostTagType = {
-//     tagId: number;
-// }
-
 import { TagType } from "./TagType"
 
 export type PostType = {

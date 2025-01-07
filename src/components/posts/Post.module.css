@@ -52,6 +52,7 @@
 
 .post .textContent h3 {
     font-size: 1.3rem;
+    text-wrap: balance;
 }
 
 .post .textContent p {
@@ -59,6 +60,7 @@
     font-size: .9rem;
     line-height: 20px;
     font-weight: 200;
+    text-wrap: balance;
 }
 
 .post .category {

@@ -7,8 +7,6 @@ import { useLocation } from "react-router-dom";
 import { PostType } from "../../types/PostType";
 import InputControlled from "../input/InputControlled";
 import TextAreaControlled from "../textarea/TextAreaControlled";
-import SelectTags from "./SelectTags";
-import { TagType } from "../../types/TagType";
 import { useCreatePost } from "../../hooks/useCreatePost";
 import SelectCategory from "./SelectCategory";
 import SelectSingleOption from "../select/SelectSingleOption";
@@ -41,12 +39,15 @@ const PostForm: React.FC = () => {
         }));
     }
 
-    const handleTagsChange = (updatedTags: TagType[]) => {
-        setFormData((prev) => ({
-            ...prev,
-            postTags: updatedTags
-        }));
-    }
+    /* There's problem with a mismatch of post types in the front-end to the back-end,
+    because to create a post the tag's should be just an array of ids but to get a post needs to bring the entire tag*/
+    
+    // const handleTagsChange = (updatedTags: TagType[]) => {
+    //     setFormData((prev) => ({
+    //         ...prev,
+    //         postTags: updatedTags
+    //     }));
+    // }
 
     let formTitle = "";
     if (formMode === "create") {
@@ -58,7 +59,6 @@ const PostForm: React.FC = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("formData",formData);
         createPostHandler(formData);
     }
 
@@ -101,7 +101,9 @@ const PostForm: React.FC = () => {
 
             <SelectCategory categoryIdSelected={formData.categoryId} handleChange={handleChange} required={true}/>
 
-            <SelectTags value={formData.postTags} handleChange={handleTagsChange}/>
+            {/* There's problem with a mismatch of post types in the front-end to the back-end,
+             because to create a post the tag's should be just an array of ids but to get a post needs to bring the entire tag*/}
+            {/* <SelectTags value={formData.postTags} handleChange={handleTagsChange}/> */}
 
             <SelectSingleOption 
                 id="status" 
