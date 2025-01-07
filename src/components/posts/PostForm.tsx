@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styles from "./Post.module.css";
 import Form from "../form/Form";
-import { useCategories } from "../../contexts/post/CategoriesContext";
 import CategoriesForm from "../../views/categories/CategoriesForm";
 import TagsForm from "../../views/tags/TagsForm";
 import { useLocation } from "react-router-dom";
@@ -11,6 +10,8 @@ import TextAreaControlled from "../textarea/TextAreaControlled";
 import SelectTags from "./SelectTags";
 import { TagType } from "../../types/TagType";
 import { useCreatePost } from "../../hooks/useCreatePost";
+import SelectCategory from "./SelectCategory";
+import SelectSingleOption from "../select/SelectSingleOption";
 
 const PostForm: React.FC = () => {
     const { createPostHandler, statusCreatingPost } = useCreatePost();
@@ -31,8 +32,6 @@ const PostForm: React.FC = () => {
     const postDataFromRoute = location.state?.postData as PostType | undefined;
     const formMode = postDataFromRoute ? "edit" : "create";
     const [formData, setFormData] = useState<PostType>(postDataFromRoute || defaultFormData);
-    
-    console.log(formData);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
@@ -49,10 +48,7 @@ const PostForm: React.FC = () => {
         }));
     }
 
-    const { categories, statusFetchingCategories } = useCategories();
-
     let formTitle = "";
-    
     if (formMode === "create") {
         formTitle = "Create a post";
         
@@ -62,12 +58,12 @@ const PostForm: React.FC = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(formData);
+        console.log("formData",formData);
         createPostHandler(formData);
     }
 
     return <div className={styles.postPage}>
-        <Form title={formTitle} handleSubmit={handleSubmit}>
+        <Form title={formTitle} handleSubmit={handleSubmit} isFormValid={formData.categoryId !== 0}>
             <InputControlled
                 id="title"
                 label="Title"
@@ -103,23 +99,17 @@ const PostForm: React.FC = () => {
                 handleChange={handleChange}
             />
 
-            <label htmlFor="categories">Select the category</label>
-            {statusFetchingCategories === "success" ? <select name="categoryId" id="categoryId" value={formData.categoryId} onChange={handleChange}>
-                {categories && categories.map((category, index) => (
-                    <option 
-                        key={index}
-                        value={category.id}
-                    >{category.name}</option>
-                ))}
-            </select> : <p>{statusFetchingCategories}</p>}
+            <SelectCategory categoryIdSelected={formData.categoryId} handleChange={handleChange} required={true}/>
 
             <SelectTags value={formData.postTags} handleChange={handleTagsChange}/>
-            
-            <label htmlFor="status">Status</label>
-            <select name="status" id="status" value={formData.status} onChange={handleChange}>
-                <option value="active">Active</option>
-                <option value="arquived">Arquived</option>
-            </select>
+
+            <SelectSingleOption 
+                id="status" 
+                label="Status" 
+                options={[{name: "Active", value: "active"}, {name: "Arquived", value: "arquived"}]}
+                optionSelected={formData.status}
+                handleChange={handleChange}
+            />
 
             <InputControlled
                 id="link"

@@ -12,7 +12,6 @@ export const useListOfPosts = () => {
                 setStatusFetchingPosts("loading...");
                 const listFetched = await fetchPosts();
                 setListOfPosts(listFetched);
-                console.log(listFetched);
                 setStatusFetchingPosts("success");
             } catch (error) {
                 setStatusFetchingPosts(error instanceof Error ? error.message : "Error fetching the post's")

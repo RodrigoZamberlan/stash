@@ -35,20 +35,11 @@
     transition: all 0.3s ease;
 }
 
-.post:hover img {
-    opacity: .4;
-}
-
-.post:hover .textContent {
-    opacity: 1;   
-}
-
 .post .textContent {
     position: absolute;
-    bottom: 0;
-    left: 0;
+    bottom: 12px;
+    left: 8px;
     text-align: left;
-    padding: 12px 8px;
     opacity: 0;
     transition: opacity 0.3s ease;
     color: #fff;
@@ -68,6 +59,31 @@
     font-size: .9rem;
     line-height: 20px;
     font-weight: 200;
+}
+
+.post .category {
+    font-size: .9rem;
+    color: #000;
+    background-color: #fff;
+    padding: 4px 6px;
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    right: 10px;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.post:hover img {
+    opacity: .4;
+}
+
+.post:hover .textContent {
+    opacity: 1;   
+}
+
+.post:hover .category {
+    opacity: 1;
 }
 
 @media only screen and (max-width: 1400px) {

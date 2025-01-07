@@ -13,6 +13,7 @@ export type PostType = {
     status: string,
     postTags?: TagType[],
     categoryId: number,
+    categoryName?: string,
     userId: number,
     link?: string
 }

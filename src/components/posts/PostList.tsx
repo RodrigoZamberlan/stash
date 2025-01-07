@@ -1,34 +1,12 @@
-import { useEffect, useState } from "react";
-import { PostType } from "../../types/PostType";
-import { fetchPosts } from "../../services/PostService";
 import styles from "./Post.module.css";
 import Post from "./Post";
+import { useListOfPosts } from "../../hooks/useListOfPosts";
 
 const PostList: React.FC = () => {
-    const [listOfPosts, setListOfPosts] = useState<PostType[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [error ,setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        const getAllPosts = async () => {
-            try {
-                setLoading(true);
-                const allPosts = await fetchPosts();
-                setListOfPosts(allPosts);
-                setLoading(false);
-            } catch (error) {
-                setError(error instanceof Error ? error.message : "Error to fetch the posts");
-                setLoading(false);
-            } 
-        }
-
-        getAllPosts();
-    }, []);
+    const { listOfPosts, statusFetchingPosts } = useListOfPosts();
 
     return <div className={styles.listOfPosts}>
-        {error === null && !loading && listOfPosts.length === 0 ? <p>No post's yet! Go ahead and create the first one.</p> : ""}
-        {loading ? <p>Loading</p> : listOfPosts.map((post, index) => (<div key={index}><Post post={post}/></div>))}
-        {!loading && error ? <p>{error}</p> : ""}
+        {statusFetchingPosts === "success" ? listOfPosts.map((post, index) => (<div key={index}><Post post={post}/></div>)) : <p>{statusFetchingPosts}</p>}
     </div>
 }
 

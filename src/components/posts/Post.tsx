@@ -12,6 +12,7 @@ const Post: React.FC<PostProps> = ({post}) => {
         return (
             <a href={post.link} target="_blank" rel="noreferrer">
                 <div className={styles.post}>
+                    <div className={styles.category}>{post.categoryName}</div>
                     <img src={post.coverImage} alt={post.description} />
                     <div className={styles.textContent}>
                         <h3>{post.title}</h3>
