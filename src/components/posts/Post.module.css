@@ -8,13 +8,6 @@
     align-items: baseline;
 }
 
-.postPage {
-    padding: 60px;
-    width: 1200px;
-    margin: auto;
-    max-width: 100%;
-}
-
 .secondaryForms {
     display: grid;
     row-gap: 20px;
@@ -103,9 +96,5 @@
 @media only screen and (max-width: 1400px) {
     .post img {
         height: 280px;
-    }
-
-    .postPage {
-        padding: 30px;
     }
 }

@@ -11,6 +11,7 @@ import { useCreatePost } from "../../hooks/useCreatePost";
 import SelectCategory from "./SelectCategory";
 import SelectSingleOption from "../select/SelectSingleOption";
 import useUpdatePost from "../../hooks/useUpdatePost";
+import SelectTags from "./SelectTags";
 
 const PostForm: React.FC = () => {
     const defaultFormData = {
@@ -40,16 +41,13 @@ const PostForm: React.FC = () => {
 
     const { createPostHandler, statusCreatingPost } = useCreatePost();
     const { updatePostHandler, statusUpdatingPost } = useUpdatePost();
-
-    /* There's problem with a mismatch of post types in the front-end to the back-end,
-    because to create a post the tag's should be just an array of ids but to get a post needs to bring the entire tag*/
     
-    // const handleTagsChange = (updatedTags: TagType[]) => {
-    //     setFormData((prev) => ({
-    //         ...prev,
-    //         postTags: updatedTags
-    //     }));
-    // }
+    const handleTagsChange = (updatedTagsId: number[]) => {
+        setFormData((prev) => ({
+            ...prev,
+            tagsId: updatedTagsId
+        }));
+    }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -101,9 +99,7 @@ const PostForm: React.FC = () => {
 
             <SelectCategory categoryIdSelected={formData.categoryId} handleChange={handleChange} required={true}/>
 
-            {/* There's problem with a mismatch of post types in the front-end to the back-end,
-             because to create a post the tag's should be just an array of ids but to get a post needs to bring the entire tag*/}
-            {/* <SelectTags value={formData.postTags} handleChange={handleTagsChange}/> */}
+            <SelectTags value={formData.tagsId} handleChange={handleTagsChange}/>
 
             <SelectSingleOption 
                 id="status" 

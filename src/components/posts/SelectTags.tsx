@@ -4,15 +4,28 @@ import { TagType } from "../../types/TagType";
 import { useTags } from "../../contexts/post/TagsContext";
 
 interface SelectTagsProps {
-    value?: TagType[],
-    handleChange: (updatedTags: TagType[]) => void
+    value?: number[],
+    handleChange: (updatedTags: number[]) => void
 }
 
 const SelectTags: React.FC<SelectTagsProps> = ({value = [], handleChange}) => {
     const { tags, statusFetchingTags } = useTags();
     const [searchTerm, setSearchTerm] = useState("");
     const [listOfTags, setListOfTags] = useState<TagType[] | null>(null);
-    const [selectedTags, setSelectedTags] = useState<TagType[]>(value);
+    const [selectedTags, setSelectedTags] = useState<number[]>(value);
+
+    const handleCheckboxChange = (tagId: number) => {
+        let updatedSelectedTags;
+
+        if (selectedTags.includes(tagId)) {
+            updatedSelectedTags = selectedTags.filter(id => id !== tagId);
+        } else {
+            updatedSelectedTags = [...selectedTags, tagId]
+        }
+
+        setSelectedTags(updatedSelectedTags);
+        handleChange(updatedSelectedTags);
+    }
 
     useEffect(() => {
        setListOfTags(tags);
@@ -30,18 +43,6 @@ const SelectTags: React.FC<SelectTagsProps> = ({value = [], handleChange}) => {
         }
     }
 
-    const isOptionChecked = (tag: TagType) => {
-        return selectedTags.some((selected) => selected.id === tag.id);
-    }
-
-    const handleOptionToggle = (tag: TagType) => {
-        const isSelected = isOptionChecked(tag);
-
-        const updatedSelection = isSelected ? selectedTags.filter((selected) => selected.id !== tag.id) : [...selectedTags, tag];
-        setSelectedTags(updatedSelection);
-        handleChange(updatedSelection);
-    }
-
     if (statusFetchingTags !== "success") {
         return (<p>{statusFetchingTags}</p>)
     }
@@ -53,13 +54,13 @@ const SelectTags: React.FC<SelectTagsProps> = ({value = [], handleChange}) => {
             <div className={styles.listOfOptions}>
                 {listOfTags && listOfTags.map((tag, index) => (
                     <div key={index}>
-                        <input 
+                        {tag.id !== undefined && <input 
                             id={`checkbox-${tag.name}`}
                             type="checkbox" 
-                            value={tag.id} 
-                            checked={isOptionChecked(tag)} 
-                            onChange={() => handleOptionToggle(tag)}
-                        />
+                            value={tag.id}
+                            checked={selectedTags.includes(tag.id)}
+                            onChange={() => {handleCheckboxChange(tag.id!)}}
+                        />}
                         <label htmlFor={`checkbox-${tag.name}`}>{tag.name}</label>
                     </div>
                 ))}

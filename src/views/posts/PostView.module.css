@@ -1,3 +1,10 @@
+.postPage {
+    padding: 60px;
+    width: 1200px;
+    margin: auto;
+    max-width: 100%;
+}
+
 .introSection {
     width: 1200px;
     max-width: 100%;
@@ -25,5 +32,9 @@
     .introSection h1 {
         font-size: 4rem;
         margin: 10px auto;
+    }
+
+    .postPage {
+        padding: 30px;
     }
 }
