@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useListOfPosts } from "../../hooks/useListOfPosts";
 import { PostType } from "../../types/PostType";
 import Button from "../button/Button";
-import { getPost } from "../../services/PostService";
+import { deletePost, getPost } from "../../services/PostService";
 
 interface TableCrudProps {
   list: PostType[];
@@ -23,6 +23,18 @@ const TableCrud: React.FC<TableCrudProps> = ({ list }) => {
       }
     };
 
+    const handleDelete = async (post: PostType) => {
+      if (post.id) {
+        try {
+          console.log(post.id);
+          const response = await deletePost(post.id);
+          console.log(response);
+        } catch (error) {
+          console.error(error instanceof Error ? error.message : "Fail to delete the post");
+        }
+      }
+    }
+
   return (
     <table>
       <tr>
@@ -38,7 +50,7 @@ const TableCrud: React.FC<TableCrudProps> = ({ list }) => {
             <button onClick={() => {handleEdit(post)}}>Edit</button>
           </td>
           <td>
-            <Button>Delete</Button>
+            <button onClick={() => {handleDelete(post)}}>Delete</button>
           </td>
         </tr>
       ))}

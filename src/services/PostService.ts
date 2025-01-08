@@ -26,3 +26,8 @@ export const updatePost = async (id: number, postData: PostType): Promise<PostTy
     })
 }
 
+export const deletePost = async (id: number): Promise<void> => {
+    return apiClient<void>(`/posts/${id}`, {
+        method: 'DELETE'
+    });
+}
