@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useListOfPosts } from "../../hooks/useListOfPosts";
 import { PostType } from "../../types/PostType";
 import Button from "../button/Button";
+import { getPost } from "../../services/PostService";
 
 interface TableCrudProps {
   list: PostType[];
@@ -10,8 +11,16 @@ interface TableCrudProps {
 const TableCrud: React.FC<TableCrudProps> = ({ list }) => {
     const navigate = useNavigate();
 
-    const handleEdit = (post: PostType) => {
-        navigate(`/post-edit/${post.id}`, { state: { postData: post } });
+    const handleEdit = async (post: PostType) => {
+      if (post.id) {
+        try {
+          const postData = await getPost(post.id);
+          console.log("post data", postData);
+          navigate(`/post-edit/${post.id}`, { state: { postData: postData } });
+        } catch (error) {
+          console.error(error);
+        }
+      }
     };
 
   return (

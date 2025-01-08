@@ -4,32 +4,31 @@ import Form from "../form/Form";
 import CategoriesForm from "../../views/categories/CategoriesForm";
 import TagsForm from "../../views/tags/TagsForm";
 import { useLocation } from "react-router-dom";
-import { PostType } from "../../types/PostType";
+import { PostCrudType } from "../../types/PostCrudType";
 import InputControlled from "../input/InputControlled";
 import TextAreaControlled from "../textarea/TextAreaControlled";
 import { useCreatePost } from "../../hooks/useCreatePost";
 import SelectCategory from "./SelectCategory";
 import SelectSingleOption from "../select/SelectSingleOption";
+import useUpdatePost from "../../hooks/useUpdatePost";
 
 const PostForm: React.FC = () => {
-    const { createPostHandler, statusCreatingPost } = useCreatePost();
-
     const defaultFormData = {
         title: "",
         coverImage: "",
         description: "",
         content: "",
         status: "arquived",
-        postTags: [],
+        tagsId: [],
         categoryId: 0,
         userId: 2,
         link: ""
     }
 
     const location = useLocation();
-    const postDataFromRoute = location.state?.postData as PostType | undefined;
+    const postDataFromRoute = location.state?.postData as PostCrudType | undefined;
     const formMode = postDataFromRoute ? "edit" : "create";
-    const [formData, setFormData] = useState<PostType>(postDataFromRoute || defaultFormData);
+    const [formData, setFormData] = useState<PostCrudType>(postDataFromRoute || defaultFormData);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
@@ -38,6 +37,9 @@ const PostForm: React.FC = () => {
           [name]: value  
         }));
     }
+
+    const { createPostHandler, statusCreatingPost } = useCreatePost();
+    const { updatePostHandler, statusUpdatingPost } = useUpdatePost();
 
     /* There's problem with a mismatch of post types in the front-end to the back-end,
     because to create a post the tag's should be just an array of ids but to get a post needs to bring the entire tag*/
@@ -49,21 +51,19 @@ const PostForm: React.FC = () => {
     //     }));
     // }
 
-    let formTitle = "";
-    if (formMode === "create") {
-        formTitle = "Create a post";
-        
-    } else {
-        formTitle = "Edit the post";
-    }
-
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        createPostHandler(formData);
+        if (formMode === "create") {
+            createPostHandler(formData);
+            setFormData(defaultFormData);
+        } else {
+            console.log("formData", formData);
+            updatePostHandler(formData);
+        }
     }
 
-    return <div className={styles.postPage}>
-        <Form title={formTitle} handleSubmit={handleSubmit} isFormValid={formData.categoryId !== 0}>
+    return <div className={styles.postFormPage}>
+        <Form title={formMode === "create" ? "Create Post" : "Update the Post"} handleSubmit={handleSubmit} isFormValid={formData.categoryId !== 0}>
             <InputControlled
                 id="title"
                 label="Title"

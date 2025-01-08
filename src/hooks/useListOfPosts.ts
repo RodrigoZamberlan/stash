@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import { fetchPosts } from "../services/PostService"
+import { fetchPosts } from "../services/PostService";
 import { PostType } from "../types/PostType";
 
-export const useListOfPosts = () => {
+type FilterFunction = (post: PostType) => boolean;
+
+export const useListOfPosts = (filterFn?: FilterFunction) => {
     const [listOfPosts, setListOfPosts] = useState<PostType[]>([]);
     const [statusFetchingPosts, setStatusFetchingPosts] = useState("idle");
+    const [filteredPosts, setFilteredPosts] = useState<PostType[]>([]);
 
     useEffect(() => {
         const getPosts = async () => {
@@ -14,12 +17,22 @@ export const useListOfPosts = () => {
                 setListOfPosts(listFetched);
                 setStatusFetchingPosts("success");
             } catch (error) {
-                setStatusFetchingPosts(error instanceof Error ? error.message : "Error fetching the post's")
+                setStatusFetchingPosts(
+                    error instanceof Error ? error.message : "Error fetching the posts"
+                );
             }
-        }
-    
+        };
+
         getPosts();
     }, []);
 
-    return { listOfPosts, statusFetchingPosts }
-}
+    useEffect(() => {
+        if (filterFn) {
+            setFilteredPosts(listOfPosts.filter(filterFn));
+        } else {
+            setFilteredPosts(listOfPosts);
+        }
+    }, [listOfPosts, filterFn]);
+
+    return { listOfPosts, filteredPosts, statusFetchingPosts };
+};
