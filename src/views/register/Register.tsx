@@ -19,7 +19,7 @@ const formDataDefault = {
 
 const Register: React.FC = () => {
     const [formData, setFormData] = useState(formDataDefault);
-    const { createUserHandler, loading, errors } = useCreateUser();
+    const { createUserHandler, statusCreatingUser } = useCreateUser();
     const fieldNamesToCheckValidation = ["email", "password"];
     const { isFormValid, updateValidationStatus } = useValidationStatus({fieldNamesToCheckValidation});
 
@@ -36,14 +36,14 @@ const Register: React.FC = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const success = await createUserHandler(formData);
-        if (success) {
+        await createUserHandler(formData);
+        if (statusCreatingUser === "success") {
             navigate('/login');
         }
     }
 
     return <div className="form-page">
-        <Form title="Register" loading={loading} errors={errors} handleSubmit={handleSubmit} isFormValid={isFormValid}>
+        <Form title="Register" handleSubmit={handleSubmit} isFormValid={isFormValid}>
             <InputControlled id="firstname" label="First Name" value={formData.firstname} placeholder="Type your first name here" handleChange={handleChange} required/>
             <InputControlled id="lastname" label="Last Name" value={formData.lastname} placeholder="Type your last name here" handleChange={handleChange} required/>
             <InputEmailWithValidation id="email" label="E-mail" value={formData.email} placeholder="Type your e-mail here" type="email" handleChange={handleChange} onValidationChange={handleValidationStatusChange}/>

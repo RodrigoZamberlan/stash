@@ -8,7 +8,7 @@ import { useAuth } from "../../hooks/useAuth";
 const Login: React.FC = () => {
     const email = useRef<HTMLInputElement>(null);
     const password = useRef<HTMLInputElement>(null);
-    const { authUserHandler, loading, errors } = useAuth();
+    const { authUserHandler } = useAuth();
 
     const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ const Login: React.FC = () => {
     }
 
     return <div className="form-page">
-        <Form title="Login" loading={loading} errors={errors} description="Provide your credentials to access" handleSubmit={handleSubmit}>
+        <Form title="Login" description="Provide your credentials to access" handleSubmit={handleSubmit}>
             <InputUncontrolled ref={email} id="email" label="E-mail" placeholder="Type your e-mail here" required/>
             <InputUncontrolled ref={password} id="password" type="password" label="Password" placeholder="Type your password here" required/>
             

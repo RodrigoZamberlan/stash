@@ -8,15 +8,15 @@ import { fetchCategories } from "../../services/categoryService";
 
 const CategoriesForm: React.FC = () => {
     const { setCategories } = useCategories();
-    const { createCategoryHandler, loading, errors } = useCreateCategory();
+    const { createCategoryHandler, statusCreatingCategory } = useCreateCategory();
     const categoryName = useRef<HTMLInputElement>(null);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (categoryName.current && categoryName.current.value) {
             const newCategory: CategoryType = { name:  categoryName.current.value };
-            const success = await createCategoryHandler(newCategory);
-            if (success) {
+            await createCategoryHandler(newCategory);
+            if (statusCreatingCategory === "success") {
                 const updatedCategories = await fetchCategories();
                 setCategories(updatedCategories);
                 categoryName.current.value = "";
@@ -25,9 +25,8 @@ const CategoriesForm: React.FC = () => {
     }
 
     return <div>
-        <Form title="Create a new category" submitTextButton="Add" loading={loading} errors={errors} handleSubmit={handleSubmit}>
-            {loading ? <p>"Loading"</p> : <InputUncontrolled ref={categoryName} id="categoryName" label="Category Name" placeholder="Type here the name of the new category" required={true}/>}
-            {errors && <p>{errors.message}</p>}
+        <Form title="Create a new category" submitTextButton="Add" handleSubmit={handleSubmit}>
+            {statusCreatingCategory !== "success" ? <p>{statusCreatingCategory}</p> : <InputUncontrolled ref={categoryName} id="categoryName" label="Category Name" placeholder="Type here the name of the new category" required={true}/>}
         </Form>
     </div>
 }

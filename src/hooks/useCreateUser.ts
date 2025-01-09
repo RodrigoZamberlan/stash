@@ -3,23 +3,17 @@ import { createUser } from "../services/userService";
 import { UserType } from "../types/UserType";
 
 export const useCreateUser = () => {
-    const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState<{message: string} | null>(null);
+    const [statusCreatingUser, setStatusCreatingUser] = useState("idle");
     
     const createUserHandler = async (userData: UserType) => {
-        setLoading(true);
-
         try {
+            setStatusCreatingUser("loading...")
             await createUser(userData);
-            setErrors(null);
-            setLoading(false);
-            return true;
+            setStatusCreatingUser("success");
         } catch (error) {
-            setErrors(error instanceof Error ? error : {"message":"Failed to create user"});
-            setLoading(false);
-            return false;
+            setStatusCreatingUser(error instanceof Error ? error.message : "Fail to create the user");
         }
     }
 
-    return {createUserHandler, loading, errors};
+    return {createUserHandler, statusCreatingUser};
 }

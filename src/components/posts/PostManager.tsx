@@ -3,6 +3,8 @@ import { useListOfPosts } from "../../hooks/useListOfPosts";
 import { PostType } from "../../types/PostType";
 import Button from "../button/Button";
 import { deletePost, getPost } from "../../services/PostService";
+import { useEffect } from "react";
+import Table from "../table/Table";
 
 interface TableCrudProps {
   list: PostType[];
@@ -36,31 +38,20 @@ const TableCrud: React.FC<TableCrudProps> = ({ list }) => {
     }
 
   return (
-    <table>
-      <tr>
-        <td>Title</td>
-        <td>Status</td>
-        <td colSpan={2}>Actions</td>
-      </tr>
-      {list.map((post, index) => (
-        <tr key={index}>
-          <td>{post.title}</td>
-          <td>{post.status}</td>
-          <td>
-            <button onClick={() => {handleEdit(post)}}>Edit</button>
-          </td>
-          <td>
-            <button onClick={() => {handleDelete(post)}}>Delete</button>
-          </td>
-        </tr>
-      ))}
-    </table>
+    <Table id="table-posts" fieldsName={["Title", "Status"]} fieldsContent={[1, "active"]} handleEdit={handleEdit} handleDelete={handleDelete}/>
   );
 };
 
 const PostManager: React.FC = () => {
   const { listOfPosts, statusFetchingPosts } = useListOfPosts();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const updateListOfPosts = async () => {
+      
+    }
+  }, []);
+
   return (
     <div>
       <h1>So what you want to do?</h1>

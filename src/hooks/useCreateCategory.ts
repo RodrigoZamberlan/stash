@@ -3,23 +3,17 @@ import { CategoryType } from "../types/CategoryType";
 import { createCategory } from "../services/categoryService";
 
 export const useCreateCategory = () => {
-    const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState<{message: string} | null>(null);
+    const [statusCreatingCategory, setStatusCreatingCategory] = useState("idle");
 
     const createCategoryHandler = async (categoryData: CategoryType) => {
-        setLoading(true);
-
         try {
+            setStatusCreatingCategory("loading...");
             await createCategory(categoryData);
-            setErrors(null);
-            setLoading(false);
-            return true;
+            setStatusCreatingCategory("success");
         } catch (error) {
-            setErrors(error instanceof Error ? error : {message: "Failed to create the category"});
-            setLoading(false);
-            return false;
+            setStatusCreatingCategory(error instanceof Error ? error.message : "Fail to create the category");
         }
     }
 
-    return {createCategoryHandler, loading, errors};
+    return {createCategoryHandler, statusCreatingCategory};
 }

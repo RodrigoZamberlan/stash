@@ -7,7 +7,7 @@ import { fetchTags } from "../../services/tagService";
 
 const TagsForm: React.FC = () => {
     const { setTags } = useTags();
-    const {createTagHandler, loading, errors} = useCreateTag();
+    const { createTagHandler } = useCreateTag();
     const TagName = useRef<HTMLInputElement>(null);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -23,7 +23,7 @@ const TagsForm: React.FC = () => {
     }
 
     return <div className="form">
-        <Form title="Create a new Tag" submitTextButton="Add" loading={loading} errors={errors} handleSubmit={handleSubmit}>
+        <Form title="Create a new Tag" submitTextButton="Add" handleSubmit={handleSubmit}>
             <InputUncontrolled ref={TagName} id="TagName" label="Tag Name" placeholder="Type here the name of the new Tag" required={true}/>
         </Form>
     </div>
