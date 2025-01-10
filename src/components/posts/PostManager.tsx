@@ -3,54 +3,33 @@ import { useListOfPosts } from "../../hooks/useListOfPosts";
 import { PostType } from "../../types/PostType";
 import Button from "../button/Button";
 import { deletePost, getPost } from "../../services/PostService";
-import { useEffect } from "react";
 import Table from "../table/Table";
 
-interface TableCrudProps {
-  list: PostType[];
-}
-
-const TableCrud: React.FC<TableCrudProps> = ({ list }) => {
-    const navigate = useNavigate();
-
-    const handleEdit = async (post: PostType) => {
-      if (post.id) {
-        try {
-          const postData = await getPost(post.id);
-          console.log("post data", postData);
-          navigate(`/post-edit/${post.id}`, { state: { postData: postData } });
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
-
-    const handleDelete = async (post: PostType) => {
-      if (post.id) {
-        try {
-          console.log(post.id);
-          const response = await deletePost(post.id);
-          console.log(response);
-        } catch (error) {
-          console.error(error instanceof Error ? error.message : "Fail to delete the post");
-        }
-      }
-    }
-
-  return (
-    <Table id="table-posts" fieldsName={["Title", "Status"]} fieldsContent={[1, "active"]} handleEdit={handleEdit} handleDelete={handleDelete}/>
-  );
-};
-
 const PostManager: React.FC = () => {
-  const { listOfPosts, statusFetchingPosts } = useListOfPosts();
+  const { listOfPosts, setListOfPosts, statusFetchingPosts } = useListOfPosts();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const updateListOfPosts = async () => {
-      
+  const handleEdit = async (post: PostType) => {
+    if (post.id) {
+      try {
+        const postData = await getPost(post.id);
+        navigate(`/post-edit/${post.id}`, { state: { postData: postData } });
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }, []);
+  };
+
+  const handleDelete = async (post: PostType) => {
+    if (post.id) {
+      try {
+        await deletePost(post.id);
+        setListOfPosts(prevPosts => prevPosts.filter((p) => p.id !== post.id));
+      } catch (error) {
+        console.error(error instanceof Error ? error.message : "Fail to delete the post");
+      }
+    }
+  }
 
   return (
     <div>
@@ -62,7 +41,14 @@ const PostManager: React.FC = () => {
       <Button handleClick={() => { navigate('/post-create') }}>Create new</Button>
       <div>
         {statusFetchingPosts === "success" ? (
-          <TableCrud list={listOfPosts} />
+          <Table 
+            columns={[
+              {key: "id", label: "ID"},
+              {key: "title", label: "Title"},
+              {key: "status", label: "Status"}]} 
+            data={listOfPosts} 
+            onEdit={handleEdit} 
+            onDelete={handleDelete}></Table>
         ) : (
           <p>{statusFetchingPosts}</p>
         )}

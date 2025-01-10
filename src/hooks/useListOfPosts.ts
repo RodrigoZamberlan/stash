@@ -34,5 +34,5 @@ export const useListOfPosts = (filterFn?: FilterFunction) => {
         }
     }, [listOfPosts, filterFn]);
 
-    return { listOfPosts, filteredPosts, statusFetchingPosts };
+    return { listOfPosts, filteredPosts, setListOfPosts, statusFetchingPosts };
 };
