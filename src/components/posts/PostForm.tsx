@@ -91,7 +91,7 @@ const PostForm: React.FC = () => {
             <TextAreaControlled
                 id="content"
                 label="Content"
-                placeholder="Type here a short description"
+                placeholder="Type here content for the post"
                 value={formData.content}
                 required={true}
                 handleChange={handleChange}

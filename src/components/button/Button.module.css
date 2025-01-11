@@ -1,4 +1,5 @@
 button {
+    font-family: "Inter Tight";
     height: 40px;
     width: fit-content;
     padding: 0 18px;
@@ -7,22 +8,32 @@ button {
     border-radius: 5px;
     font-weight: bold;
     cursor: pointer;
-}
-
-button:disabled {
-    background-color: #333;
-    color: black;
+    font-weight: 500;
+    letter-spacing: .5px;
+    transition: background-color ease .3s;
 }
 
 .primary {
-    background-color: #FFD357;
-    color: black;
+    background-color: #3577ac;
+    color: white;
+}
+
+.primary:hover:not([disabled="disabled"]) {
+    background-color: rgb(50, 107, 151);
+}
+
+.primary:disabled {
+    opacity: .4;
+    cursor: default;
+}
+
+.primary:disabled:hover {
+    background-color: #3577ac;
 }
 
 .link {
     height: auto;
     padding: 0 6px;
     background-color: transparent;
-    color: #FFD357;
-    text-decoration: underline;
+    color: #fff;
 }

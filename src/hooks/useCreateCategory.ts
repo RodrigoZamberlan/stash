@@ -7,7 +7,7 @@ export const useCreateCategory = () => {
 
     const createCategoryHandler = async (categoryData: CategoryType) => {
         try {
-            setStatusCreatingCategory("loading...");
+            setStatusCreatingCategory("loading");
             await createCategory(categoryData);
             setStatusCreatingCategory("success");
         } catch (error) {

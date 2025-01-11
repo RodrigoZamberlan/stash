@@ -3,7 +3,7 @@ import styles from './Input.module.css';
 
 export interface InputProps {
     id: string;
-    label: string;
+    label?: string;
     type?: string;
     placeholder?: string;
     required?: boolean;
@@ -13,7 +13,7 @@ export interface InputProps {
 
 const InputControlled: React.FC<InputProps> = ({
     id,
-    label,
+    label = "",
     type = "text",
     placeholder = "",
     required = false,
@@ -22,7 +22,7 @@ const InputControlled: React.FC<InputProps> = ({
 }) => {
     return (
     <div className={styles.field}>
-        <label htmlFor={id}>{label} {required && "*"}</label>
+        {label && <label htmlFor={id}>{label} {required && "*"}</label>}
         <input id={id} type={type} name={id} placeholder={placeholder} required={required} value={value} onChange={handleChange}/>
     </div>
     );

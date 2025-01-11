@@ -1,3 +1,4 @@
+import styles from "../select/Select.module.css";
 import { useCategories } from "../../contexts/post/CategoriesContext";
 
 interface SelectCategoryProps {
@@ -10,8 +11,8 @@ const SelectCategory: React.FC<SelectCategoryProps> = ({categoryIdSelected, hand
     const { categories, statusFetchingCategories } = useCategories();
 
     return (<div>
-        <label htmlFor="categoryId">Select the category {required && "*"}</label>
-            {statusFetchingCategories === "success" ? <select name="categoryId" id="categoryId" value={categoryIdSelected} onChange={handleChange} required={required}>
+        <label className={styles.selectLabel} htmlFor="categoryId">Select the category {required && "*"}</label>
+            {statusFetchingCategories === "success" ? <select className={styles.select} name="categoryId" id="categoryId" value={categoryIdSelected} onChange={handleChange} required={required}>
             <option value={0} disabled hidden>Choose one category</option>
                 {categories && categories.map((category, index) => (
                     <option 

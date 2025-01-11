@@ -26,7 +26,7 @@ const CategoriesForm: React.FC = () => {
 
     return <div>
         <Form title="Create a new category" submitTextButton="Add" handleSubmit={handleSubmit}>
-            {statusCreatingCategory !== "success" ? <p>{statusCreatingCategory}</p> : <InputUncontrolled ref={categoryName} id="categoryName" label="Category Name" placeholder="Type here the name of the new category" required={true}/>}
+            <InputUncontrolled ref={categoryName} id="categoryName" label="Category Name" placeholder="Type here the name of the new category" required={true}/>
         </Form>
     </div>
 }

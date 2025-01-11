@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../select/Select.module.css";
 import { TagType } from "../../types/TagType";
 import { useTags } from "../../contexts/post/TagsContext";
+import InputControlled from "../input/InputControlled";
 
 interface SelectTagsProps {
     value?: number[],
@@ -48,20 +49,21 @@ const SelectTags: React.FC<SelectTagsProps> = ({value = [], handleChange}) => {
     }
     
     return (
-        <div>
+        <div className={styles.selectFieldContainer}>
             <label className={styles.selectLabel} htmlFor="postTags">Select some tags</label>
-            <input className={styles.inputSearch} type="text" id="searchTerm" placeholder="Type here to search for a tag" onChange={handleChangeSearchInput} value={searchTerm}/>
+            <InputControlled id="searchTerm" placeholder="Type here to search for a tag" handleChange={handleChangeSearchInput} value={searchTerm}/>
             <div className={styles.listOfOptions}>
                 {listOfTags && listOfTags.map((tag, index) => (
                     <div key={index}>
                         {tag.id !== undefined && <input 
+                            className={styles.inputCheckbox}
                             id={`checkbox-${tag.name}`}
                             type="checkbox" 
                             value={tag.id}
                             checked={selectedTags.includes(tag.id)}
                             onChange={() => {handleCheckboxChange(tag.id!)}}
                         />}
-                        <label htmlFor={`checkbox-${tag.name}`}>{tag.name}</label>
+                        <label htmlFor={`checkbox-${tag.name}`} className={styles.labelCheckbox}>{tag.name}</label>
                     </div>
                 ))}
             </div>

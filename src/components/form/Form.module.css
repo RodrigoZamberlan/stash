@@ -1,5 +1,5 @@
 .formContainer {
-    background-color: #1c1c1c;
+    background-color: #28272C;
     padding: 30px;
     min-width: 500px;
     width: fit-content;
@@ -12,7 +12,7 @@
 .formContainer .title {
     font-size: 32px;
     margin-bottom: 16px;
-    color: #FFD357;
+    color: #fff;
 }
 
 .formContainer p {
