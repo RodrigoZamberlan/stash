@@ -27,6 +27,14 @@
     text-align: right;
 }
 
-form button {
+.formContainer form button {
     margin-top: 20px;
+}
+
+.errorMessage{
+    color: #fff;
+    margin-top: 20px;
+    background-color: tomato;
+    padding: 10px;
+    border-radius: 6px;
 }

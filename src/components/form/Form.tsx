@@ -28,8 +28,9 @@ const Form: React.FC<FormProps> = (
 
             <div className={styles.buttonWrapper}>
                 <Button disabled={!isFormValid} styleType="primary" type="submit">{status === "loading" ? status : submitTextButton}</Button>
-                {status !== "success" && status !== "loading" ? <p>{status}</p> : ""}
            </div>
+
+            {status && status !== "success" && status !== "loading" ? <p className={styles.errorMessage}>{status}</p> : ""}           
         </form>
     </div>
 }

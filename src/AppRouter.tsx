@@ -1,14 +1,19 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Welcome from './views/welcome/Welcome';
 import Home from './views/home/Home';
 import Login from './views/login/Login';
 import Register from './views/register/Register';
-import Categories from './views/categories/CategoriesForm';
-import Tags from './views/tags/TagsForm';
 import PostsView from './views/posts/PostsView';
 import PostManager from './components/posts/PostManager';
 import PostForm from './components/posts/PostForm';
+import TagsForm from './views/tags/TagsForm';
+import CategoriesForm from './views/categories/CategoriesForm';
+
+const PrivateRoute = ({children} : {children: React.ReactNode}) => {
+    const isAuthenticated = !!localStorage.getItem("stash_user_token");
+    return isAuthenticated ? <>{children}</> : <Navigate to="/login" />
+}
 
 const AppRouter: React.FC = () => {
     return (<Router>
@@ -18,13 +23,54 @@ const AppRouter: React.FC = () => {
                     <Route path='/login' element={<Login />}></Route>
                     <Route path='/register' element={<Register />}></Route>
 
-                    <Route path='/posts-dashboard' element={<PostManager />}></Route>
-                    <Route path='/post-create/' element={<PostForm />}></Route>
-                    <Route path='/post-edit/:id' element={<PostForm />}></Route>
-                    <Route path='/posts' element={<PostsView />}></Route>
+                    <Route path='/posts-dashboard' element={
+                        <PrivateRoute>
+                            <PostManager />
+                        </PrivateRoute>
+                        }>
+                    </Route>
 
-                    <Route path='/categories' element={<Categories />}></Route>
-                    <Route path='/tags' element={<Tags />}></Route>
+                    <Route path='/post-create' element={
+                        <PrivateRoute>
+                            <PostForm />
+                        </PrivateRoute>
+                        }>
+                    </Route>
+
+                    <Route path='/posts-create/:id' element={
+                        <PrivateRoute>
+                            <PostForm />
+                        </PrivateRoute>
+                        }>
+                    </Route>
+
+                    <Route path='/posts' element={
+                        <PrivateRoute>
+                            <PostsView />
+                        </PrivateRoute>
+                        }>
+                    </Route>
+
+                    <Route path='/posts' element={
+                        <PrivateRoute>
+                            <PostsView />
+                        </PrivateRoute>
+                        }>
+                    </Route>
+
+                    <Route path='/category-create' element={
+                        <PrivateRoute>
+                            <CategoriesForm />
+                        </PrivateRoute>
+                        }>
+                    </Route>
+
+                    <Route path='/tag-create' element={
+                        <PrivateRoute>
+                            <TagsForm />
+                        </PrivateRoute>
+                        }>
+                    </Route>
 
                 </Routes>
             </Router>);

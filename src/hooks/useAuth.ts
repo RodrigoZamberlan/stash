@@ -2,25 +2,19 @@ import { useState } from "react"
 import { authUser } from "../services/userService";
 
 export const useAuth = () => {
-    const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState<{message: string} | null>(null);
+    const [statusAuth, setStatusAuth] = useState("");
 
     const authUserHandler = async (email: string, password: string) => {
-        setLoading(true);
-
         try {
+            setStatusAuth("loading")
             await authUser(email, password);
-            setErrors(null);
-            setLoading(false);
+            setStatusAuth("success");
             return true;
         } catch (error) {
-            setErrors(error instanceof Error ? error : {"message": "Failed to authenticate the user"});
-            setLoading(false);
+            setStatusAuth(error instanceof Error ? error.message : "Faild to authenticate");
             return false;
-        } finally {
-            setLoading(false);
         }
     }
 
-    return {authUserHandler, loading, errors}
+    return {authUserHandler, statusAuth}
 }
