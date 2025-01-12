@@ -2,7 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../button/Button';
 import styles from './Header.module.css';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+    children: React.ReactNode;
+}
+
+const Header: React.FC<HeaderProps> = ({children}) => {
     const navigate = useNavigate();
 
     const handleSignOut = () => {
@@ -13,7 +17,7 @@ const Header: React.FC = () => {
     return <header className={styles.header}>
         <h1>Stash</h1>
         <nav className={styles.navigation}>
-            <div></div>
+            {children}
             <Button handleClick={handleSignOut}>Sign Out</Button>
         </nav>
     </header>
