@@ -4,6 +4,7 @@ import { PostType } from "../../types/PostType";
 import Button from "../button/Button";
 import { deletePost, getPost } from "../../services/PostService";
 import Table from "../table/Table";
+import HeaderPosts from "./HeaderPosts";
 
 const PostManager: React.FC = () => {
   const { listOfPosts, setListOfPosts, statusFetchingPosts } = useListOfPosts();
@@ -33,6 +34,7 @@ const PostManager: React.FC = () => {
 
   return (
     <div>
+      <HeaderPosts/>
       <h1>So what you want to do?</h1>
       <p>
         Here's the list of all current posts registered, you can edit delete or
