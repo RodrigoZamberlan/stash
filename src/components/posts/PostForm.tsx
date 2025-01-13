@@ -55,7 +55,6 @@ const PostForm: React.FC = () => {
             createPostHandler(formData);
             setFormData(defaultFormData);
         } else {
-            console.log("formData", formData);
             updatePostHandler(formData);
         }
     }

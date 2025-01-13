@@ -29,8 +29,9 @@ const SelectTags: React.FC<SelectTagsProps> = ({value = [], handleChange}) => {
     }
 
     useEffect(() => {
-       setListOfTags(tags);
-    }, [tags]);
+        setSelectedTags(value);
+        setListOfTags(tags);
+    }, [tags, value]);
 
     const handleChangeSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = event.target.value;
