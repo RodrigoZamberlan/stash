@@ -4,6 +4,7 @@ import InputUncontrolled from "../input/InputUncontrolled";
 import { useRef, useState } from "react";
 import { PostType } from "../../types/PostType";
 import Post from "./Post";
+import Button from "../button/Button";
 
 
 const PostList: React.FC = () => {
@@ -11,6 +12,7 @@ const PostList: React.FC = () => {
     const listOfActivePosts = listOfPosts.filter(post => post.status === "active");
     const searchTerm = useRef<HTMLInputElement | null>(null);
     const [filteredPosts, setFilteredPosts] = useState<PostType[] | null>(null);
+    let message: string = "";
 
     const handleSearchResults = (searchTerm: string | undefined) => {
         if (searchTerm && searchTerm.length > 0) {
@@ -21,26 +23,27 @@ const PostList: React.FC = () => {
     }
 
     if (statusFetchingPosts !== "success") {
-        return (<p className={styles.message}>{statusFetchingPosts}</p>);
+        message = statusFetchingPosts;
     }
     
     if ( listOfActivePosts.length === 0) {
-        return (<p className={styles.message}>No post's yet to show</p>);
+        message = "No post's yet to show";
     }
 
     if (filteredPosts !== null && filteredPosts.length === 0) {
-        return (<p className={styles.message}>No results found</p>);
+        message = "No results found";
     }
 
     return (<>
         <div className={styles.wrapperSearch}>
             <InputUncontrolled ref={searchTerm} id="search-term-post" placeholder="Find what you are looking for"/>
-            <button onClick={() => handleSearchResults(searchTerm.current?.value)}>Search</button>
+            <Button handleClick={() => handleSearchResults(searchTerm.current?.value)}>Search</Button>
         </div>
 
         <div className={styles.listOfPosts}>
             {filteredPosts === null && listOfActivePosts.map((post, index) => (<div key={index}><Post post={post}/></div>))}
-            {filteredPosts !== null && filteredPosts.length > 0 ? filteredPosts.map((post, index) => (<div key={index}><Post post={post}/></div>)) : "No results found"}
+            {filteredPosts !== null && filteredPosts.length > 0 ? filteredPosts.map((post, index) => (<div key={index}><Post post={post}/></div>)) : ""}
+            {message.length > 0 ? message : ""}
         </div>
     </>)
 }

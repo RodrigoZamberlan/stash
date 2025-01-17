@@ -37,3 +37,7 @@ button {
     background-color: transparent;
     color: #fff;
 }
+
+.link:hover {
+    background-color: #333;
+}
