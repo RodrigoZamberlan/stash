@@ -6,7 +6,7 @@ const PostList: React.FC = () => {
     const { listOfPosts, statusFetchingPosts } = useListOfPosts();
     const listOfActivePosts = listOfPosts.filter(post => post.status === "active");
 
-    if ( listOfActivePosts.length === 0) {
+    if ( listOfActivePosts.length === 0 && statusFetchingPosts === "success") {
         return (<p className={styles.message}>No post's yet to show</p>);
     }
 

@@ -6,10 +6,18 @@ interface ButtonProps {
     styleType?: 'primary' |'secondary' | 'link' | 'disabled';
     type?: 'submit' | 'button';
     disabled?: boolean;
+    customStyle?: React.CSSProperties;
 }
 
-const Button: React.FC<ButtonProps> = ({children, handleClick, styleType = 'primary', type = 'button', disabled = false}) => {
-    return <button className={styles[styleType]} onClick={handleClick} type={type} disabled={disabled}>{children}</button>
+const Button: React.FC<ButtonProps> = ({
+    children,
+    handleClick,
+    styleType = 'primary',
+    type = 'button',
+    disabled = false,
+    customStyle,
+}) => {
+    return <button className={styles[styleType]} onClick={handleClick} type={type} disabled={disabled} style={customStyle}>{children}</button>
 }
 
 export default Button;
