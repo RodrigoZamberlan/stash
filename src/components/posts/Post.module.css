@@ -22,6 +22,20 @@
     grid-template-columns: 1fr 1fr 1fr;
 }
 
+.wrapperSearch {
+    position: relative;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.wrapperSearch button {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 5px;
+    margin: auto;
+}
+
 .post {
     position: relative;
     overflow: hidden;
